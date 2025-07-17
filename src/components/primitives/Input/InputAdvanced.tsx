@@ -97,6 +97,7 @@ const InputAdvance = (
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
+      overflow="hidden"
       {...layoutProps}
       ref={mergeRefs([_ref, wrapperRef])}
     >
@@ -109,13 +110,12 @@ const InputAdvance = (
         disableFocusHandling
         ref={ref}
         variant="unstyled"
-        onFocus={(e: any) => {
+        onFocus={(e) => {
           handleFocus(true, onFocus ? () => onFocus(e) : () => {});
         }}
-        onBlur={(e: any) => {
+        onBlur={(e) => {
           handleFocus(false, onBlur ? () => onBlur(e) : () => {});
         }}
-        shadow="none"
       />
       {InputRightElement || rightElement
         ? InputRightElement || rightElement

@@ -19,7 +19,7 @@ const FormControl = (props: IFormControlProps, ref: any) => {
   }
   return (
     <FormControlContext.Provider value={context}>
-      <Box {...resolvedProps} {...htmlProps} ref={ref} />
+      <Box width="100%" {...resolvedProps} {...htmlProps} ref={ref} />
     </FormControlContext.Provider>
   );
 };

@@ -1,6 +1,6 @@
 type LiteralUnion<T extends U, U = string> = T | (U & {});
 
-export interface InterfaceHiddenProps {
+export interface IHiddenProps {
   /**
    * The from prop takes breakpoint from which the wrapped component is hidden.
    */
@@ -30,10 +30,4 @@ export interface InterfaceHiddenProps {
    *
    */
   children: React.ReactElement | null;
-  /**
-   *
-   */
-  isSSR?: boolean;
 }
-
-export type IHiddenProps = InterfaceHiddenProps;

@@ -6,14 +6,11 @@ import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
 
 export default memo(
   forwardRef(
-    (
-      { children, divider, variant, ...props }: IButtonGroupProps,
-      ref?: any
-    ) => {
+    ({ children, divider, ...props }: IButtonGroupProps, ref?: any) => {
       const {
         space,
         direction,
-
+        variant,
         size,
         colorScheme,
         isDisabled,
@@ -22,13 +19,12 @@ export default memo(
       } = usePropsResolution('ButtonGroup', props);
 
       const { borderRadius } = usePropsResolution('Button', props);
-      let computedChildren;
+      let computedChildren: JSX.Element | JSX.Element[];
 
       if (Array.isArray(children)) {
-        computedChildren = React.Children.toArray(children).map(
-          (child: any, index: number) => {
-            if (typeof child === 'string' || typeof child === 'number')
-              return child;
+        computedChildren = React.Children.map(
+          children,
+          (child: JSX.Element, index: number) => {
             return React.cloneElement(child, {
               key: `button-group-child-${index}`,
               variant,
@@ -60,8 +56,9 @@ export default memo(
           }
         );
       } else {
-        computedChildren = React.Children.toArray(children).map(
-          (child: any, index: number) => {
+        computedChildren = React.Children.map(
+          children,
+          (child: JSX.Element, index: number) => {
             return React.cloneElement(child, {
               key: `button-group-child-${index}`,
               variant,

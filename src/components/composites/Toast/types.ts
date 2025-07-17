@@ -1,9 +1,8 @@
+import type { IAlertProps } from '../Alert/types';
 import type { ReactNode } from 'react';
-import type { ITextProps } from '../../primitives/Text';
-import type { InterfaceBoxProps } from '../../primitives/Box';
-import type { CustomProps } from '../../../components/types';
+import type { IBoxProps } from '../../primitives/Box';
 
-export interface InterfaceToastProps extends InterfaceBoxProps<IToastProps> {
+export interface IToastProps extends IBoxProps<IToastProps> {
   /**
    * The title to be rendered in the Toast
    */
@@ -21,6 +20,10 @@ export interface InterfaceToastProps extends InterfaceBoxProps<IToastProps> {
    * The `id` of the toast. Mostly used when you need to prevent duplicate. By default, we generate a unique `id` for each toast
    */
   id?: any;
+  /**
+   * If `true`, toast will show a close button
+   */
+  isClosable?: boolean;
   /**
    * Callback function to run side effects after the toast has closed.
    */
@@ -41,13 +44,12 @@ export interface InterfaceToastProps extends InterfaceBoxProps<IToastProps> {
    */
   render?: (props: any) => ReactNode;
   /**
-   * For providing props to Title inside Toast
+   * The status of the toast. Adding status will render an [Alert](alert.md) component inside the `Toast`
    */
-  _title?: Partial<ITextProps>;
-  /**
-   * For providing props to Description inside Toast
+  status?: IAlertProps['status'];
+  /** The variants of the [Alert](alert.md) component.
    */
-  _description?: Partial<ITextProps>;
+  variant?: IAlertProps['variant'];
   /**
    * The text to be announced by a screen reader when the Toast opens.
    */
@@ -56,11 +58,6 @@ export interface InterfaceToastProps extends InterfaceBoxProps<IToastProps> {
    * Determines the [accessibility announcement tone](https://reactnative.dev/docs/accessibility#accessibilityliveregion-android).
    */
   accessibilityLiveRegion?: 'none' | 'polite' | 'assertive';
-  /**
-   * If true and the keyboard is opened, the Toast will move up equivalent to the keyboard height.
-   * @default false
-   */
-  avoidKeyboard?: boolean;
 }
 
 export type IToast = {
@@ -84,5 +81,3 @@ export type IToastContext = {
   setVisibleToasts: any;
   hideToast: (id: any) => void;
 };
-
-export type IToastProps = InterfaceToastProps & CustomProps<'Toast'>;

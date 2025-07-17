@@ -1,7 +1,6 @@
 import React from 'react';
 import { default as Box } from '../components/primitives/Box';
 import type { SpaceType as ThemeSpaceType } from '../components/types';
-import { ResponsiveQueryContext } from './useResponsiveQuery/ResponsiveQueryProvider';
 
 type SpaceType =
   | 'gutter'
@@ -14,55 +13,18 @@ type SpaceType =
   | '2xl'
   | ThemeSpaceType;
 
-// Thanks @gregberge for code and @nandorojo for suggestion.
-// Original source: https://github.com/gregberge/react-flatten-children
-type ReactChildArray = ReturnType<typeof React.Children.toArray>;
-function flattenChildren(
-  children: JSX.Element[] | JSX.Element,
-  keys: (string | number)[] = []
-): ReactChildArray {
-  const childrenArray = React.Children.toArray(children);
-  return childrenArray.reduce(
-    (flatChildren: ReactChildArray, child: any, index: number) => {
-      if ((child as React.ReactElement<any>).type === React.Fragment) {
-        return flatChildren.concat(
-          flattenChildren(
-            (child as React.ReactElement<any>).props.children,
-            keys.concat(child.key || index)
-          )
-        );
-      }
-      if (React.isValidElement(child)) {
-        flatChildren.push(
-          React.cloneElement(child, {
-            key: keys.concat(String(child.key || index)).join('.'),
-          })
-        );
-      } else {
-        flatChildren.push(child);
-      }
-      return flatChildren;
-    },
-    []
-  );
-}
-
-const getSpacedChildren = (
+export default (
   children: JSX.Element[] | JSX.Element,
   space: undefined | SpaceType,
   axis: 'X' | 'Y',
   reverse: string,
   divider: JSX.Element | undefined
 ): any => {
-  let childrenArray = React.Children.toArray(flattenChildren(children));
+  let childrenArray = React.Children.toArray(children);
   childrenArray =
     reverse === 'reverse' ? [...childrenArray].reverse() : childrenArray;
 
   const orientation = axis === 'X' ? 'vertical' : 'horizontal';
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const responsiveQueryContext = React.useContext(ResponsiveQueryContext);
-  const disableCSSMediaQueries = responsiveQueryContext.disableCSSMediaQueries;
 
   // If there's a divider, we wrap it with a Box and apply vertical and horizontal margins else we add a spacer Box with height or width
   if (divider) {
@@ -91,11 +53,7 @@ const getSpacedChildren = (
       return (
         <React.Fragment key={child.key ?? `spaced-child-${index}`}>
           {child}
-          {disableCSSMediaQueries ? (
-            index < childrenArray.length - 1 && <Box {...spacingProp} />
-          ) : (
-            <></>
-          )}
+          {index < childrenArray.length - 1 && <Box {...spacingProp} />}
         </React.Fragment>
       );
     });
@@ -103,5 +61,3 @@ const getSpacedChildren = (
 
   return childrenArray;
 };
-
-export default getSpacedChildren;

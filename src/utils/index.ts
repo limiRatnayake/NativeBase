@@ -13,12 +13,9 @@ export {
   mergeRefs,
   composeEventHandlers,
 };
-export { wrapStringChild } from './wrapStringChild';
 export { combineContextAndProps } from './combineContextAndProps';
 export type { IAccessibilityProps } from './accessibilityTypes';
 export { ariaAttr } from './accessibilityUtils';
 export { createContext } from './createContext';
 export { useKeyboardBottomInset } from './useKeyboardBottomInset';
 export { isEmptyObj } from './isEmptyObj';
-export { resolveStackStyleInput } from './resolveStackStyleInput';
-export { getStyleElement } from './useResponsiveQuery/useResponsiveQuery';

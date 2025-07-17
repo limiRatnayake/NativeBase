@@ -25,22 +25,17 @@ const Modal = (
     isKeyboardDismissable = true,
     overlayVisible = true,
     backdropVisible = true,
-    animationPreset,
+    //@ts-ignore - internal purpose only
+    animationPreset = 'fade',
     ...rest
   }: IModalProps,
   ref: any
 ) => {
   const bottomInset = useKeyboardBottomInset();
-  const {
-    contentSize,
-    _backdrop,
-    _backdropFade,
-    _fade,
-    _slide,
-    _overlay,
-    useRNModal,
-    ...resolvedProps
-  } = usePropsResolution('Modal', rest);
+  const { contentSize, _backdrop, ...resolvedProps } = usePropsResolution(
+    'Modal',
+    rest
+  );
 
   const [visible, setVisible] = useControllableState({
     value: isOpen,
@@ -50,7 +45,7 @@ const Modal = (
     },
   });
 
-  const handleClose = React.useCallback(() => setVisible(false), [setVisible]);
+  const handleClose = () => setVisible(false);
 
   const child = (
     <Box
@@ -62,34 +57,31 @@ const Modal = (
       {children}
     </Box>
   );
-
-  const contextValue = React.useMemo(() => {
-    return {
-      handleClose,
-      contentSize,
-      initialFocusRef,
-      finalFocusRef,
-      visible,
-    };
-  }, [handleClose, contentSize, initialFocusRef, finalFocusRef, visible]);
-
   //TODO: refactor for responsive prop
   if (useHasResponsiveProps(rest)) {
     return null;
   }
-
   return (
     <Overlay
       isOpen={visible}
       onRequestClose={handleClose}
       isKeyboardDismissable={isKeyboardDismissable}
-      animationPreset={animationPreset}
       useRNModalOnAndroid
-      useRNModal={useRNModal}
-      {..._overlay}
     >
-      <ModalContext.Provider value={contextValue}>
-        <Fade in={visible} style={StyleSheet.absoluteFill} {..._backdropFade}>
+      <ModalContext.Provider
+        value={{
+          handleClose,
+          contentSize,
+          initialFocusRef,
+          finalFocusRef,
+        }}
+      >
+        <Fade
+          exitDuration={150}
+          entryDuration={200}
+          in={visible}
+          style={StyleSheet.absoluteFill}
+        >
           {overlayVisible && backdropVisible && (
             <Backdrop
               onPress={() => {
@@ -100,7 +92,7 @@ const Modal = (
           )}
         </Fade>
         {animationPreset === 'slide' ? (
-          <Slide in={visible} {..._slide}>
+          <Slide in={visible} duration={200}>
             <FocusScope
               contain={visible}
               autoFocus={visible && !initialFocusRef}
@@ -110,7 +102,12 @@ const Modal = (
             </FocusScope>
           </Slide>
         ) : (
-          <Fade in={visible} style={StyleSheet.absoluteFill} {..._fade}>
+          <Fade
+            exitDuration={100}
+            entryDuration={200}
+            in={visible}
+            style={StyleSheet.absoluteFill}
+          >
             <FocusScope
               contain={visible}
               autoFocus={visible && !initialFocusRef}

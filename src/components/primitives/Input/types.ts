@@ -1,18 +1,11 @@
 import type { TextInputProps } from 'react-native';
 import type { StyledProps } from '../../../theme/types';
-import type { PlatformProps } from '../../types';
-import type { InterfaceBoxProps } from '../Box';
+import type { PlatformProps, VariantType } from '../../types';
+import type { IBoxProps } from '../Box';
+import type { ResponsiveValue } from '../../../components/types';
 import type { ISizes } from '../../../theme/base/sizes';
-import type {
-  CustomProps,
-  ThemeComponentSizeType,
-  VariantType,
-} from '../../types';
-import type { ResponsiveValue, ColorType } from '../../../components/types';
-import type { IStackProps } from '../Stack/Stack';
-import type { MutableRefObject, RefCallback } from 'react';
 
-export interface InterfaceInputProps
+export interface IInputProps
   extends PlatformProps<IInputProps>,
     Omit<TextInputProps, 'textAlign'>,
     StyledProps {
@@ -22,7 +15,7 @@ export interface InterfaceInputProps
   isInvalid?: boolean;
   /**
    * The variant of the input style to use.
-   * @default 'outline'
+   * @default <code>outline</code>
    */
   variant?: VariantType<'Input'>;
   /**
@@ -30,18 +23,10 @@ export interface InterfaceInputProps
    */
   isDisabled?: boolean;
   /**
-   * 	If true, the input will be hovered.
-   */
-  isHovered?: boolean;
-  /**
-   * 	If true, the input will be focused.
-   */
-  isFocused?: boolean;
-  /**
    * The size of the input.
-   * @default 'md'
+   * @default <code>md</code>
    */
-  size?: ThemeComponentSizeType<'Input'>; // ResponsiveValue<ISizes | (string & {}) | number>;
+  size?: ResponsiveValue<ISizes | (string & {}) | number>;
   /**
    * This will set aria-required="true" on web when passed in formcontrol.
    */
@@ -73,7 +58,7 @@ export interface InterfaceInputProps
   /**
    * Using the type password, user can mask the input.
    */
-  type?: 'text' | 'password';
+  type?: 'text' | 'password' | string;
   /**
    * Ref to be passed to Icon's wrapper Box
    */
@@ -82,51 +67,37 @@ export interface InterfaceInputProps
   /**
    * Passed props will be applied on hovered state.
    */
-  _hover?: Partial<IInputProps>;
+  _hover?: Omit<IInputProps, '_hover'>;
   /**
    * Passed props will be applied on focused state.
    */
-  _focus?: Partial<IInputProps>;
+  _focus?: Omit<IInputProps, '_focus'>;
   /**
    * Passed props will be applied on disabled state.
    */
-  _disabled?: Partial<IInputProps>;
+  _disabled?: Omit<IInputProps, '_disabled'>;
   /**
    * Passed props will be applied on readOnly state.
    */
-  _readOnly?: Partial<IInputProps>;
+  _readOnly?: Omit<IInputProps, '_readOnly'>;
   /**
    * Passed props will be applied on invalid state.
    */
-  _invalid?: Partial<IInputProps>;
-  /**
-   * props are passed to InputBase component
-   */
-  _input?: Partial<IInputProps>;
-  /**
-   * Props to be passed to the Stack used inside.
-   */
-  _stack?: Partial<IStackProps>;
-  /** This prop allows you to change outlineColor when input is in the focused state*/
-  focusOutlineColor?: ColorType;
-  /** This prop allows you to change outlineColor when input is in invalid state*/
-  invalidOutlineColor?: ColorType;
-  ref?: MutableRefObject<any> | RefCallback<any>;
+  _invalid?: Omit<IInputProps, '_hover'>;
+  // These porps are currently on hold
+  // label?: string;
+  // _label?: ITextProps;
 }
 
-export interface IInputGroupProps extends InterfaceBoxProps<IInputGroupProps> {
+export interface IInputGroupProps extends IBoxProps<IInputGroupProps> {
   /**
    * The variant of the input style to use.
-   * @default 'outline'
+   * @default <code>outline</code>
    */
   variant?: string;
   /**
    * The size of the input.
-   * @default 'md'
+   * @default <code>md</code>
    */
   size?: ResponsiveValue<ISizes | (string & {}) | number>;
 }
-
-export type IInputComponentType = (props: IInputProps) => JSX.Element;
-
-export type IInputProps = InterfaceInputProps & CustomProps<'Input'>;

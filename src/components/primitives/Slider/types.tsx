@@ -1,11 +1,7 @@
 import type { MutableRefObject } from 'react';
-import type { CustomProps } from '../../../components/types';
-import type { InterfaceBoxProps } from '../Box';
-import type { ColorSchemeType } from '../../../components/types';
-import type { ResponsiveValue } from '../../types';
-import type { ISizes } from '../../../theme/base/sizes';
+import type { IBoxProps } from '../Box';
 
-export interface InterfaceSliderProps extends InterfaceBoxProps<ISliderProps> {
+export interface ISliderProps extends IBoxProps<ISliderProps> {
   /** The current value of the Slider */
   value?: number;
   /** The default value (uncontrolled). */
@@ -15,7 +11,7 @@ export interface InterfaceSliderProps extends InterfaceBoxProps<ISliderProps> {
   /**
    * Color scheme of the slider
    */
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   /**
    * Text description of slider. This will be announced by screen reader/
    */
@@ -54,30 +50,19 @@ export interface InterfaceSliderProps extends InterfaceBoxProps<ISliderProps> {
   _disabled?: any;
   /** Props applied if isReadOnly is true. */
   _readOnly?: any;
-  /** Prop applied to change slider track height */
-  sliderTrackHeight?: ResponsiveValue<ISizes | (string & {}) | number>;
-  /**Prop applied to change size of slider thumb */
-  thumbSize?: ResponsiveValue<ISizes | (string & {}) | number>;
-  /**
-   * You can style interaction box around the checkbox using this.
-   */
-  _interactionBox?: Omit<Partial<ISliderThumbProps>, '_interactionBox'>;
 }
 
-export interface ISliderTrackProps
-  extends InterfaceBoxProps<ISliderTrackProps> {
+export interface ISliderTrackProps extends IBoxProps<ISliderTrackProps> {
   /** Whether the whole Slider is readonly. */
   isReadOnly?: boolean;
   /** Props applied if isDisabled is true. */
   _disabled?: any;
   /** Props applied if isReadOnly is true. */
   _readOnly?: any;
-  /** Wrapper style for SliderTrack */
-  _pressable?: {};
 }
 
 export interface ISliderTrackFilledProps
-  extends InterfaceBoxProps<ISliderTrackFilledProps> {
+  extends IBoxProps<ISliderTrackFilledProps> {
   /** Whether the whole Slider is readonly. */
   isReadOnly?: boolean;
   /** Props applied if isDisabled is true. */
@@ -86,8 +71,7 @@ export interface ISliderTrackFilledProps
   _readOnly?: any;
 }
 
-export interface ISliderThumbProps
-  extends InterfaceBoxProps<ISliderThumbProps> {
+export interface ISliderThumbProps extends IBoxProps<ISliderThumbProps> {
   /**
    * The orientation of the Slider.
    * @default 'horizontal'
@@ -101,18 +85,6 @@ export interface ISliderThumbProps
   _disabled?: any;
   /** Props applied if isReadOnly is true. */
   _readOnly?: any;
-  /**
-   * Props to be passed to the slider thumb when button is hovered.
-   */
-  _hover?: Omit<Partial<ISliderThumbProps>, '_hover'>;
-  /**
-   * Props to be passed to the slider thumb when button is pressed.
-   */
-  _pressed?: Omit<Partial<ISliderThumbProps>, '_pressed'>;
-  /**
-   * Props to be passed to the slider thumb when button is focused.
-   */
-  _focus?: Omit<Partial<ISliderThumbProps>, '_focus'>;
 }
 
 export type ISliderComponentType = ((
@@ -130,5 +102,3 @@ export type ISliderComponentType = ((
     ) => JSX.Element
   >;
 };
-
-export type ISliderProps = InterfaceSliderProps & CustomProps<'Slider'>;

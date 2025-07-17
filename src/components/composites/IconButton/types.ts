@@ -1,21 +1,10 @@
-import type { InterfacePressableProps } from '../../primitives/Pressable/types';
+import type { IPressableProps } from '../../primitives/Pressable';
 import type { IIconProps } from '../../primitives/Icon';
-import type { ColorSchemeType, PlatformProps } from '../../../components/types';
+import type { ResponsiveValue, VariantType } from '../../types';
+import type { ISizes } from '../../../theme/base/sizes';
 
-import type { CustomProps, VariantType } from '../../types';
-import type { ThemeComponentSizeType } from '../../../components/types/utils';
-export interface InterfaceIconButtonProps
-  extends Omit<
-      InterfacePressableProps<InterfaceIconButtonProps>,
-      | 'children'
-      | 'color'
-      | '_light'
-      | '_dark'
-      | '_web'
-      | '_android'
-      | '_ios'
-      | '_important'
-    >,
+export interface IIconButtonProps
+  extends Omit<IPressableProps, 'children' | 'color'>,
     Omit<
       IIconProps,
       | 'delayLongPress'
@@ -32,14 +21,12 @@ export interface InterfaceIconButtonProps
       | '_web'
       | '_android'
       | '_ios'
-      | '_important'
-    >,
-    PlatformProps<IIconButtonProps> {
+    > {
   /**
    * The color of the radio when it's checked. This should be one of the color keys in the theme (e.g."green", "red").
    * @default 'primary'
    */
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   /**
    * The variant of the button style to use.
    * @default 'ghost'
@@ -48,7 +35,7 @@ export interface InterfaceIconButtonProps
   /**
    * The size of the button.
    */
-  size?: ThemeComponentSizeType<'IconButton'>;
+  size?: ResponsiveValue<ISizes | (string & {}) | number>;
   /**
    * If true, the button will be disabled.
    */
@@ -60,19 +47,17 @@ export interface InterfaceIconButtonProps
   /**
    * Props to be passed to the icon used inside of IconButton.
    */
-  _icon?: Partial<IIconProps>;
+  _icon?: IIconProps;
   /**
    *
    */
-  _hover?: Omit<Partial<IIconButtonProps>, '_hover'>;
+  _hover?: IIconButtonProps;
   /**
    *
    */
-  _pressed?: Omit<Partial<IIconButtonProps>, '_pressed'>;
+  _pressed?: IIconButtonProps;
   /**
    *
    */
-  _focus?: Omit<Partial<IIconButtonProps>, '_focus'>;
+  _focus?: IIconButtonProps;
 }
-
-export type IIconButtonProps = InterfaceIconButtonProps & CustomProps<'Icon'>;

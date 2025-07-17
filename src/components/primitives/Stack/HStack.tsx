@@ -1,13 +1,9 @@
 import React, { memo, forwardRef } from 'react';
-import StackMain, { InterfaceStackProps } from './Stack';
+import StackMain, { IStackProps } from './Stack';
 import { usePropsResolution } from '../../../hooks/useThemeProps';
-import type {
-  CustomProps,
-  ResponsiveValue,
-  // ThemeComponentSizeType,
-} from '../../types';
+import type { ResponsiveValue } from '../../types';
 import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
-export interface InterfaceHStackProps extends InterfaceStackProps {
+export interface IHStackProps extends IStackProps {
   /**
    * The direction of the Stack Items.
    * @default row
@@ -16,8 +12,6 @@ export interface InterfaceHStackProps extends InterfaceStackProps {
     'column' | 'row' | 'column-reverse' | 'row-reverse'
   >;
 }
-
-export type IHStackProps = InterfaceHStackProps & CustomProps<'HStack'>;
 
 const HStack = (props: IHStackProps, ref?: any) => {
   const resolvedProps = usePropsResolution('HStack', props);

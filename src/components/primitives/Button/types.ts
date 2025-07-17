@@ -1,41 +1,20 @@
 import type { ITextProps } from './../Text/types';
+import type { IPressableProps } from '../Pressable';
 import type { IStackProps } from '../Stack';
 import type { ResponsiveValue } from '../../types';
 import type { MutableRefObject } from 'react';
+
 import type { ISizes } from '../../../theme/base/sizes';
-import type {
-  ThemeComponentSizeType,
-  CustomProps,
-  VariantType,
-  // VariantType,
-  // VariantTypeTest,
-} from '../../../components/types/utils';
-import type { ISpinnerProps } from '../Spinner/types';
-import type { IIconProps } from '../Icon';
-import type { InterfacePressableProps } from '../Pressable/types';
-import type { ColorSchemeType } from '../../../components/types';
+import type { VariantType } from '../../../components/types/utils';
 
-// const myFunction = ({ a, b }) => {
-//   return { a: a, b: b };
-// };
-
-// type returnType = ReturnType<typeof myFunction>;
-// type parameter = Parameters<typeof myFunction>[0];
-
-// type newparameter = keyof parameter;
-// const a: parameter =
-// type parameter = Para<typeof myFunction>;
-// type buttonVariant = VariantTypeTest<'Button'>;
 // Todo: Create underscore Props section on docs.
 // _hover?: IButtonProps;
-
-export interface InterfaceButtonProps
-  extends InterfacePressableProps<IButtonProps> {
+export interface IButtonProps extends IPressableProps<IButtonProps> {
   /**
    * The color of the radio when it's checked. This should be one of the color keys in the theme (e.g."green", "red").
    * @default 'primary'
    */
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   /**
    * The variant of the button style to use.
    * @default 'solid'
@@ -46,26 +25,9 @@ export interface InterfaceButtonProps
    */
   isLoading?: boolean;
   /**
-   * If true, the button will be in hovered state.
-   */
-  isHovered?: boolean;
-  /**
-   * If true, the button will be in pressed state.
-   */
-  isPressed?: boolean;
-  /**
-   * If true, the button will be focused.
-   */
-  isFocused?: boolean;
-  /**
-   * If true, the button focus ring will be visible.
-   */
-  isFocusVisible?: boolean;
-  /**
    * The size of the button.
    */
-  size?: ThemeComponentSizeType<'Button'>;
-  // size?: SizeType;
+  size?: ResponsiveValue<ISizes | (string & {}) | number>;
   /**
    * The start icon element to use in the button.
    */
@@ -89,15 +51,11 @@ export interface InterfaceButtonProps
   /**
    * Props to style the child text
    */
-  _text?: Partial<ITextProps>;
+  _text?: ITextProps;
   /**
    * Props to be passed to the HStack used inside of Button.
    */
-  _stack?: Partial<IStackProps>;
-  /**
-   * Props to be passed to the Icon used inside of Button.
-   */
-  _icon?: Partial<IIconProps>;
+  _stack?: IStackProps;
   /**
    * Prop to decide placement of spinner.
    */
@@ -105,27 +63,15 @@ export interface InterfaceButtonProps
   /**
    * Props to be passed to the button when isLoading is true.
    */
-  _loading?: Partial<IButtonProps>;
+  _loading?: any;
   /**
    * Props to be passed to the button when button is disabled.
    */
-  _disabled?: Partial<IButtonProps>;
+  _disabled?: any;
   /**
    * Props to be passed to the spinner when isLoading is true.
    */
-  _spinner?: Partial<ISpinnerProps>;
-  /**
-   * Props to be passed to the button when button is hovered.
-   */
-  _hover?: Partial<IButtonProps>;
-  /**
-   * Props to be passed to the button when button is pressed.
-   */
-  _pressed?: Partial<IButtonProps>;
-  /**
-   * Props to be passed to the button when button is focused.
-   */
-  _focus?: Partial<IButtonProps>;
+  _spinner?: any;
   /**
    * The right icon element to use in the button.
    */
@@ -150,9 +96,7 @@ export interface IButtonGroupProps extends IStackProps {
    * The variant of the button style to use.
    * @default 'solid'
    */
-  variant?: ResponsiveValue<
-    'ghost' | 'outline' | 'solid' | 'link' | 'unstyled' | 'subtle'
-  >;
+  variant?: 'ghost' | 'outline' | 'solid' | 'link' | 'unstyled';
   /**
    * The start icon element to use in the button.
    */
@@ -163,7 +107,7 @@ export interface IButtonGroupProps extends IStackProps {
    * The color of the radio when it's checked. This should be one of the color keys in the theme (e.g."green", "red").
    * @default 'primary'
    */
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   /**
    * If true, the button will be disabled.
    */
@@ -181,5 +125,3 @@ export type IButtonComponentType = ((
     (props: IButtonGroupProps & { ref?: MutableRefObject<any> }) => JSX.Element
   >;
 };
-
-export type IButtonProps = InterfaceButtonProps & CustomProps<'Button'>;

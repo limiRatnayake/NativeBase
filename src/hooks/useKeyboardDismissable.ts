@@ -28,7 +28,7 @@ export const keyboardDismissHandlerManager = {
  */
 export const useKeyboardDismissable = ({ enabled, callback }: IParams) => {
   React.useEffect(() => {
-    let cleanupFn = () => { };
+    let cleanupFn = () => {};
     if (enabled) {
       cleanupFn = keyboardDismissHandlerManager.push(callback);
     } else {
@@ -44,21 +44,16 @@ export const useKeyboardDismissable = ({ enabled, callback }: IParams) => {
 
 export function useBackHandler({ enabled, callback }: IParams) {
   useEffect(() => {
-    let subscription: { remove: () => void } | null = null;
-
-    const backHandler = () => {
+    let backHandler = () => {
       callback();
       return true;
     };
-
     if (enabled) {
-      subscription = BackHandler.addEventListener('hardwareBackPress', backHandler);
+      BackHandler.addEventListener('hardwareBackPress', backHandler);
+    } else {
+      BackHandler.removeEventListener('hardwareBackPress', backHandler);
     }
-
-    return () => {
-      if (subscription) {
-        subscription.remove();
-      }
-    };
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', backHandler);
   }, [enabled, callback]);
 }

@@ -1,124 +1,61 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+import { mode } from './../tools';
 
-const baseStyle = {
-  py: 2,
-  borderRadius: 'sm',
-  shadow: 6,
-  bg: 'muted.50',
-  _dark: {
-    bg: 'muted.800',
-  },
-  _presenceTransition: {
-    initial: { opacity: 0 },
-    animate: {
-      opacity: 1,
-      translateY: 0,
-      transition: { duration: 200 },
+function baseStyle(props: Record<string, any>) {
+  return {
+    bg: mode(`#fff`, `gray.700`)(props),
+    py: 2,
+    borderWidth: 1,
+    borderColor: mode(`coolGray.200`, `gray.600`)(props),
+    borderRadius: 'sm',
+    transition: {
+      initial: { opacity: 0, translateY: -10 },
+      animate: {
+        opacity: 1,
+        translateY: 0,
+        transition: { duration: 200 },
+      },
+      exit: { opacity: 0, translateY: -10, transition: { duration: 150 } },
+      style: StyleSheet.absoluteFill,
     },
-    exit: { opacity: 0, transition: { duration: 150 } },
-    style: StyleSheet.absoluteFill,
-  },
-  _overlay: {
-    unmountOnExit: true,
-  },
-  _backdrop: {
-    bg: 'transparent',
-  },
-};
+  };
+}
 
 export default {
   baseStyle,
 };
 
 export const MenuGroup = {
-  baseStyle: {
+  baseStyle: (props: any) => ({
     _title: {
       fontSize: 'xs',
+      fontWeight: 600,
       textTransform: 'uppercase',
-      color: 'text.500',
-      _dark: {
-        color: 'text.400',
-      },
+      color: mode(`gray.500`, `gray.300`)(props),
     },
     p: 3,
-  },
+  }),
 };
 export const MenuItem = {
-  baseStyle: {
+  baseStyle: (props: any) => ({
     px: 3,
     py: 2,
-    _web: {
-      outlineWidth: 0,
+    outlineWidth: Platform.OS === 'web' ? 0 : undefined,
+    _disabled: {
+      _text: {
+        color: mode('gray.400', 'gray.400')(props),
+      },
     },
-    _stack: {
-      alignItems: 'center',
-      px: 3,
-      space: 3,
+    _focus: {
+      bg: mode(`coolGray.200`, `gray.600`)(props),
+    },
+    _pressed: {
+      bg: mode(`coolGray.300`, `gray.500`)(props),
     },
     _icon: {
       size: 4,
-      opacity: 0,
-      color: 'muted.500',
+      color: mode('gray.500', 'gray.100')(props),
     },
-    _text: {
-      color: 'text.900',
-    },
-    _disabled: {
-      _text: {
-        color: 'text.400',
-      },
-    },
-    _hover: {
-      bg: 'muted.200',
-    },
-    _focus: {
-      bg: 'muted.300',
-    },
-    _pressed: {
-      bg: 'muted.400',
-    },
-    _focusVisible: {
-      _web: {
-        outlineWidth: '0',
-        style: { boxShadow: `none` },
-        bg: 'muted.300',
-      },
-    },
-    _dark: {
-      _text: {
-        color: 'text.50',
-      },
-      _disabled: {
-        _text: {
-          color: 'text.600',
-        },
-      },
-      _hover: {
-        bg: 'muted.700',
-      },
-      _focus: {
-        bg: 'muted.600',
-      },
-      _pressed: {
-        bg: 'muted.500',
-      },
-
-      _icon: {
-        color: 'muted.400',
-      },
-      _focusVisible: {
-        _web: {
-          outlineWidth: '0',
-          style: { boxShadow: `none` },
-          bg: 'muted.600',
-        },
-      },
-    },
-    _checked: {
-      _icon: {
-        opacity: 1,
-      },
-    },
-  },
+  }),
   defaultProps: {},
 };

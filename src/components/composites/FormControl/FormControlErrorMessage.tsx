@@ -6,7 +6,6 @@ import { useFormControlContext } from './useFormControl';
 import type { IFormControlErrorMessageProps } from './types';
 import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
 import { combineContextAndProps } from '../../../utils';
-import Text from '../../primitives/Text';
 
 const FormControlErrorMessage = (
   props: IFormControlErrorMessageProps,
@@ -74,7 +73,7 @@ const FormControlErrorMessage = (
     <Box nativeID={resolvedProps?.helpTextId} {...resolvedProps} ref={ref}>
       <HStack {..._stack}>
         {startIcon}
-        <Text {..._text}>{children}</Text>
+        <Box _text={_text}>{children}</Box>
         {endIcon}
       </HStack>
     </Box>

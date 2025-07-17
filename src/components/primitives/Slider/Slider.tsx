@@ -58,34 +58,10 @@ function Slider({ isDisabled, isReadOnly, ...props }: ISliderProps, ref?: any) {
     trackLayout
   );
 
-  const contextValue = React.useMemo(() => {
-    return {
-      trackLayout,
-      state,
-      orientation: props.orientation,
-      isDisabled: isDisabled,
-      isReversed: props.isReversed,
-      colorScheme: props.colorScheme,
-      trackProps,
-      isReadOnly: isReadOnly,
-      onTrackLayout: onLayout,
-      thumbSize: resolvedProps.thumbSize,
-      sliderSize: resolvedProps.sliderTrackHeight,
-      _interactionBox: resolvedProps._interactionBox,
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    trackLayout,
-    state,
-    props.orientation,
-    isDisabled,
-    props.isReversed,
-    props.colorScheme,
-    isReadOnly,
-    onLayout,
-    resolvedProps.thumbSize,
-    resolvedProps.sliderTrackHeight,
-  ]);
+  const wrapperStyle = {
+    height: props.orientation === 'vertical' ? '100%' : undefined,
+    width: props.orientation !== 'vertical' ? '100%' : undefined,
+  };
 
   //TODO: refactor for responsive prop
   if (useHasResponsiveProps(props)) {
@@ -93,8 +69,28 @@ function Slider({ isDisabled, isReadOnly, ...props }: ISliderProps, ref?: any) {
   }
 
   return (
-    <SliderContext.Provider value={contextValue}>
-      <Box {...resolvedProps} ref={ref}>
+    <SliderContext.Provider
+      value={{
+        trackLayout,
+        state,
+        orientation: props.orientation,
+        isDisabled: isDisabled,
+        isReversed: props.isReversed,
+        colorScheme: props.colorScheme,
+        trackProps,
+        isReadOnly: isReadOnly,
+        onTrackLayout: onLayout,
+        thumbSize: resolvedProps.thumbSize,
+        sliderSize: resolvedProps.sliderSize,
+      }}
+    >
+      <Box
+        {...wrapperStyle}
+        justifyContent="center"
+        ref={ref}
+        alignItems="center"
+        {...resolvedProps}
+      >
         {React.Children.map(props.children, (child, index) => {
           if (child.displayName === 'SliderThumb') {
             return React.cloneElement(child as React.ReactElement, {

@@ -2,19 +2,13 @@ import type { CheckboxGroupState } from '@react-stately/checkbox';
 import type { MutableRefObject } from 'react';
 import type { TouchableOpacityProps } from 'react-native';
 import type { IFormControlContext } from '../../composites/FormControl';
-import type { InterfaceBoxProps } from '../Box';
+import type { IBoxProps } from '../Box';
 import type { IIconProps } from '../Icon';
-import type { IStackProps } from '../../primitives/Stack';
-import type {
-  CustomProps,
-  ResponsiveValue,
-  ThemeComponentSizeType,
-} from '../../../components/types';
-import type { ColorSchemeType } from '../../../components/types';
+import type { ResponsiveValue } from '../../../components/types';
 
 export type ICheckboxValue = string;
 
-export interface InterfaceCheckbox extends InterfaceBoxProps<ICheckboxProps> {
+export interface ICheckboxProps extends IBoxProps<ICheckboxProps> {
   /**
    * assign id to checkbox
    */
@@ -30,7 +24,7 @@ export interface InterfaceCheckbox extends InterfaceBoxProps<ICheckboxProps> {
   /**
    * The color of the radio when it's checked. This should be one of the color keys in the theme (e.g."green", "red").
    */
-  colorScheme?: ColorSchemeType & ResponsiveValue<'default'>;
+  colorScheme?: string | 'default';
   /**
    * If true, the checkbox will be initially checked. (use defaultValue prop if using it inside Checkbox.Group)
    */
@@ -43,10 +37,10 @@ export interface InterfaceCheckbox extends InterfaceBoxProps<ICheckboxProps> {
    * If true, the checkbox will be indeterminate. This only affects the icon shown inside checkbox.
    */
   isIndeterminate?: boolean;
-  // isFullWidth?: boolean;
   /**
    * If true, the checkbox will be disabled.
    */
+  // isFullWidth?: boolean;
   isDisabled?: boolean;
   /**
    * If true, the checkbox is marked as invalid.
@@ -57,26 +51,10 @@ export interface InterfaceCheckbox extends InterfaceBoxProps<ICheckboxProps> {
    */
   isReadOnly?: boolean;
   /**
-   * If true, the checkbox will be hovered.
-   */
-  isHovered?: boolean;
-  /**
-   * If true, the checkbox will be pressed.
-   */
-  isPressed?: boolean;
-  /**
-   * If true, the checkbox will be focused.
-   */
-  isFocused?: boolean;
-  /**
-   * If true, the checkbox focus ring will be visible.
-   */
-  isFocusVisible?: boolean;
-  /**
    * The size (width and height) of the checkbox.
    * @default 'md'
    */
-  size?: ThemeComponentSizeType<'Checkbox'>;
+  size?: ResponsiveValue<'sm' | 'md' | 'lg'>;
   /**
    * If given, will use this icon instead of the default.
    */
@@ -84,47 +62,43 @@ export interface InterfaceCheckbox extends InterfaceBoxProps<ICheckboxProps> {
   /**
    * Passed props wilICheckboxGroupPropsl be applied on disabled state.
    */
-  _disabled?: Omit<Partial<ICheckboxProps>, '_disabled'>;
+  _disabled?: Omit<ICheckboxProps, '_disabled'>;
   /**
    * Passed props will be applied on checked state.
    */
-  _checked?: Omit<Partial<ICheckboxProps>, '_checked'>;
+  _checked?: Omit<ICheckboxProps, '_checked'>;
   /**
    * Passed props will be applied on unchecked state.
    */
-  _unchecked?: Omit<Partial<ICheckboxProps>, '_unchecked'>;
+  _unchecked?: Omit<ICheckboxProps, '_unchecked'>;
   /**
    * Passed props will be applied on focus state.
    */
-  _focus?: Omit<Partial<ICheckboxProps>, '_focus'>;
+  _focus?: Omit<ICheckboxProps, '_focus'>;
   /**
    * Passed props will be applied on hover state.
    */
-  _hover?: Omit<Partial<ICheckboxProps>, '_hover'>;
+  _hover?: Omit<ICheckboxProps, '_hover'>;
   /**
    * Passed props will be applied on invalid state.
    */
-  _invalid?: Omit<Partial<ICheckboxProps>, '_invalid'>;
+  _invalid?: Omit<ICheckboxProps, '_invalid'>;
   /**
    * Passed props will be applied on pressed state on native.
    */
-  _pressed?: Omit<Partial<ICheckboxProps>, '_pressed'>;
+  _pressed?: Omit<ICheckboxProps, '_pressed'>;
   /**
    * Passed props will be applied on readonly state.
    */
-  _readOnly?: Omit<Partial<ICheckboxProps>, '_readOnly'>;
+  _readOnly?: Omit<ICheckboxProps, '_readOnly'>;
   /**
    * Icon related props can be passed in _icon.
    */
-  _icon?: Partial<IIconProps>;
+  _icon?: IIconProps;
   /**
    * You can style interaction box around the checkbox using this.
    */
-  _interactionBox?: Omit<Partial<ICheckboxProps>, '_interactionBox'>;
-  /**
-   * Props to be passed to the Stack used inside.
-   */
-  _stack?: Partial<IStackProps>;
+  _interactionBox?: Omit<ICheckboxProps, '_interactionBox'>;
   /**
    * Function called when the state of the checkbox changes.
    */
@@ -138,8 +112,7 @@ export interface InterfaceCheckbox extends InterfaceBoxProps<ICheckboxProps> {
   wrapperRef?: any;
   ref?: MutableRefObject<any>;
 }
-export interface ICheckboxGroupProps
-  extends InterfaceBoxProps<ICheckboxGroupProps> {
+export interface ICheckboxGroupProps extends IBoxProps<ICheckboxGroupProps> {
   /**
    * assign id to checkbox group
    */
@@ -155,7 +128,7 @@ export interface ICheckboxGroupProps
   /**
    * The color of the radio when it's checked. This should be one of the color keys in the theme (e.g."green", "red").
    */
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   /**
    * The size (width and height) of the checkbox.
    */
@@ -164,13 +137,9 @@ export interface ICheckboxGroupProps
    * The callback fired when any children Checkbox is checked or unchecked.
    */
   onChange?: (values: any) => any;
-  /**
-   * Pass props will be passed to each checkbox.
-   */
-  _checkbox?: Partial<ICheckboxProps>;
 }
 export interface ICheckboxContext extends IFormControlContext {
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   size?: ResponsiveValue<'sm' | 'md' | 'lg'>;
   state: CheckboxGroupState;
 }
@@ -195,5 +164,3 @@ export type ICheckboxComponentType = ((
     (props: ICheckboxGroupProps, ref?: MutableRefObject<any>) => JSX.Element
   >;
 };
-
-export type ICheckboxProps = InterfaceCheckbox & CustomProps<'Checkbox'>;

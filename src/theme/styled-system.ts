@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import get from 'lodash.get';
+import has from 'lodash.has';
+import { resolveValueWithBreakpoint } from '../hooks/useThemeProps/utils';
 import { transparentize } from './tools';
-import type { ITheme } from '.';
-import type { UseResponsiveQueryParams } from '../utils/useResponsiveQuery';
-import { getStyledFromProps } from '../utils/getStyledFromProps';
-import { convertStringNumberToNumber } from '../utils/convertStringNumberToNumber';
+import { strictModeLogger } from '../core/StrictMode';
+
 const isNumber = (n: any) => typeof n === 'number' && !isNaN(n);
 
 export const getColor = (rawValue: any, scale: any, theme: any) => {
@@ -114,7 +114,6 @@ export const flexbox = {
   flexDirection: true,
   flexDir: {
     property: 'flexDirection',
-    scale: 'flexDirection',
   },
   // item
   flex: true,
@@ -130,6 +129,7 @@ export const position = {
   position: true,
   zIndex: {
     property: 'zIndex',
+    scale: 'zIndices',
   },
   top: {
     property: 'top',
@@ -181,11 +181,6 @@ export const color = {
   },
   background: {
     property: 'backgroundColor',
-    scale: 'colors',
-    transformer: getColor,
-  },
-  textDecorationColor: {
-    property: 'textDecorationColor',
     scale: 'colors',
     transformer: getColor,
   },
@@ -522,20 +517,12 @@ export const space = {
     properties: ['paddingTop', 'paddingBottom'],
     scale: 'space',
   },
-  gap: {
-    property: 'gap',
-    scale: 'space',
-  },
 } as const;
 
 export const typography = {
   fontFamily: {
     property: 'fontFamily',
     scale: 'fonts',
-    // transformer: (val: any, scale: any) => {
-    //   const value = get(scale, val);
-    //   return value ? value.toString() : undefined;
-    // },
   },
   fontSize: {
     property: 'fontSize',
@@ -571,17 +558,14 @@ export const typography = {
 const extraProps = {
   outline: true,
   outlineWidth: true,
-  outlineColor: true,
-  outlineStyle: true,
   shadow: {
     scale: 'shadows',
   },
   cursor: true,
   overflow: true,
-  userSelect: { property: 'userSelect' },
 } as const;
 
-export const propConfig = {
+const propConfig = {
   ...color,
   ...space,
   ...layout,
@@ -593,62 +577,135 @@ export const propConfig = {
   ...extraProps,
 } as const;
 
+// For backward compatibility with 3.0 of props like non token string numbers `<Box mt={"39"} />` => used to get applied as 39px. RN expects fontWeight to be string and crashes with numbers
+// https://reactnative.dev/docs/text-style-props#fontweight
+const convertStringNumberToNumber = (key: string, value: string) => {
+  if (
+    typeof value === 'string' &&
+    key !== 'fontWeight' &&
+    value &&
+    !isNaN(Number(value))
+  ) {
+    return parseFloat(value);
+  }
+
+  return value;
+};
+
 export const getStyleAndFilteredProps = ({
   style,
   theme,
   debug,
   currentBreakpoint,
-  getResponsiveStyles,
-  styledSystemProps,
+  strictMode,
+  ...props
 }: any) => {
-  let dataSet: any = {};
+  let styleFromProps: any = {};
+  const restProps: any = {};
+  for (const key in props) {
+    const rawValue = props[key];
 
-  const orderedBreakPoints = Object.entries(
-    theme.breakpoints as ITheme['breakpoints']
-  ).sort((a, b) => a[1] - b[1]);
+    if (key in propConfig) {
+      const value = resolveValueWithBreakpoint(
+        rawValue,
+        theme.breakpoints,
+        currentBreakpoint,
+        key
+      );
 
-  let { styleFromProps, responsiveStyles }: any = getStyledFromProps(
-    styledSystemProps,
-    theme,
-    currentBreakpoint,
-    propConfig
-  );
+      const config = propConfig[key as keyof typeof propConfig];
 
-  if (responsiveStyles) {
-    const query: UseResponsiveQueryParams = { query: [] };
-    orderedBreakPoints.forEach((o) => {
-      const key = o[0];
-      if (key === 'base') {
-        if (responsiveStyles) query.initial = responsiveStyles.base;
-      } else {
-        if (responsiveStyles)
-          if (key in responsiveStyles) {
-            query?.query?.push({
-              minWidth: o[1],
-              style: responsiveStyles[key],
-            });
+      if (config === true) {
+        styleFromProps = {
+          ...styleFromProps,
+          [key]: convertStringNumberToNumber(key, value),
+        };
+      } else if (config) {
+        //@ts-ignore
+        const { property, scale, properties, transformer } = config;
+        let val = value;
+        const strictModeProps = {
+          token: value,
+          scale,
+          mode: strictMode,
+          type: 'tokenNotFound' as any,
+        };
+
+        if (transformer) {
+          val = transformer(
+            val,
+            theme[scale],
+            theme,
+            props.fontSize,
+            strictModeProps
+          );
+        } else {
+          // If a token is not found in the theme
+          if (!has(theme[scale], value) && typeof value !== 'undefined') {
+            strictModeLogger(strictModeProps);
           }
-      }
-    });
 
-    const { dataSet: newDataSet, styles } = getResponsiveStyles(query);
-    dataSet = { ...dataSet, ...newDataSet };
-    styleFromProps = { ...styleFromProps, ...StyleSheet.flatten(styles) };
+          val = get(theme[scale], value, value);
+        }
+
+        if (typeof val === 'string') {
+          if (val.endsWith('px')) {
+            val = parseFloat(val);
+          } else if (val.endsWith('em') && Platform.OS !== 'web') {
+            const fontSize = resolveValueWithBreakpoint(
+              props.fontSize,
+              theme.breakpoints,
+              currentBreakpoint,
+              key
+            );
+            val =
+              parseFloat(val) *
+              parseFloat(get(theme.fontSizes, fontSize, fontSize));
+          }
+        }
+
+        if (typeof value !== 'string' && typeof value !== 'undefined') {
+          strictModeLogger({
+            ...strictModeProps,
+            type: 'tokenNotString',
+          });
+        }
+
+        val = convertStringNumberToNumber(key, val);
+
+        if (properties) {
+          //@ts-ignore
+          properties.forEach((property) => {
+            styleFromProps = {
+              ...styleFromProps,
+              [property]: val,
+            };
+          });
+        } else if (property) {
+          styleFromProps = {
+            ...styleFromProps,
+            [property]: val,
+          };
+        } else {
+          styleFromProps = {
+            ...styleFromProps,
+            ...val,
+          };
+        }
+      }
+    } else {
+      restProps[key] = rawValue;
+    }
   }
 
-  if (process.env.NODE_ENV === 'development' && debug) {
+  if (debug) {
     /* eslint-disable-next-line */
-    console.log('style ', debug + ' :: ', {
-      styleFromProps,
-      style,
-      styledSystemProps,
-    });
+    console.log('style ', debug + ' :: ', styleFromProps, style, props);
   }
 
   return {
     styleSheet: StyleSheet.create({ box: styleFromProps }),
-    styleFromProps,
-    dataSet,
+    restProps,
   };
 };
 

@@ -1,74 +1,53 @@
-import { getColorScheme } from '../tools';
-import type { InterfaceBadgeProps } from '../../components/composites/Badge/types';
+import { mode, getColorScheme } from '../tools';
+
 const baseStyle = {
-  flexDirection: 'row',
-  justifyContent: 'center',
-  space: 1,
   px: '2',
   py: '0.5',
   alignItems: 'center',
   _text: { fontSize: 'xs', fontWeight: 'medium' },
 };
 
-function variantSolid(props: InterfaceBadgeProps & { colorScheme: any }) {
+function variantSolid(props: Record<string, any>) {
   const colorScheme = getColorScheme(props);
   return {
-    _text: {
-      color: 'text.50',
-    },
-    _icon: {
-      color: 'text.50',
-    },
-    bg: `${colorScheme}.600`,
+    bg: mode(`${colorScheme}.600`, `${colorScheme}.300`)(props),
+    _text: { color: mode(`coolGray.100`, `coolGray.800`)(props) },
     borderWidth: '1',
     borderColor: 'transparent',
     borderRadius: '2',
   };
 }
 
-function variantSubtle(props: InterfaceBadgeProps & { colorScheme: any }) {
+function variantSubtle(props: Record<string, any>) {
   const colorScheme = getColorScheme(props);
   return {
-    _text: { color: `${colorScheme}.900` },
-    _icon: { color: `${colorScheme}.900` },
-    bg: `${colorScheme}.100`,
-    _dark: { bg: `${colorScheme}.300` },
+    bg: mode(`${colorScheme}.200`, `${colorScheme}.700`)(props),
+    _text: { color: mode(`${colorScheme}.600`, `${colorScheme}.200`)(props) },
     borderWidth: '1',
     borderRadius: '2',
     borderColor: 'transparent',
   };
 }
 
-function variantOutline(props: InterfaceBadgeProps & { colorScheme: any }) {
+function variantOutline(props: Record<string, any>) {
   const colorScheme = getColorScheme(props);
   return {
-    _text: { color: `${colorScheme}.600` },
-    _icon: { color: `${colorScheme}.600` },
-    borderColor: `${colorScheme}.600`,
-    _dark: {
-      _text: {
-        color: `${colorScheme}.300`,
-      },
-      _icon: {
-        color: `${colorScheme}.300`,
-      },
-      borderColor: `${colorScheme}.300`,
-    },
+    borderColor: mode(`${colorScheme}.500`, `${colorScheme}.400`)(props),
+    _text: { color: mode(`${colorScheme}.500`, `${colorScheme}.400`)(props) },
     borderRadius: '2',
     borderWidth: '1',
   };
 }
 
 const variants = {
-  solid: variantSolid as any,
-  subtle: variantSubtle as any,
-  outline: variantOutline as any,
+  solid: variantSolid,
+  subtle: variantSubtle,
+  outline: variantOutline,
 };
 
 const defaultProps = {
   variant: 'subtle',
-  colorScheme: 'muted',
-  size: 'md',
+  colorScheme: 'coolGray',
 };
 
 export default {

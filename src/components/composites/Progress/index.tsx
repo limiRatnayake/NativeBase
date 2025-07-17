@@ -1,16 +1,11 @@
 import React, { memo, forwardRef } from 'react';
-import { Box } from '../../primitives';
-import type { InterfaceBoxProps } from '../../primitives/Box';
+import { Box, IBoxProps } from '../../primitives';
 import { usePropsResolution } from '../../../hooks/useThemeProps';
 import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
-import type { ColorSchemeType } from '../../../components/types';
-import type {
-  CustomProps,
-  ThemeComponentSizeType,
-} from '../../../components/types';
+import type { ResponsiveValue } from '../../../components/types';
+import type { ISizes } from '../../../theme/base/sizes';
 
-export interface InterfaceProgressProps
-  extends InterfaceBoxProps<IProgressProps> {
+export interface IProgressProps extends IBoxProps<IProgressProps> {
   /**
    * Value of Progress.
    * @default 0
@@ -20,13 +15,13 @@ export interface InterfaceProgressProps
    * Defines height of Progress
    * @default sm
    */
-  size?: ThemeComponentSizeType<'Progress'>;
+  size?: ResponsiveValue<ISizes | (string & {}) | number>;
 
   /**
    * The color scheme of the progress. This should be one of the color keys in the theme (e.g."green", "red").
    * @default primary
    */
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   // /**
   //  * Whether progress is indeterminate
   //  * @default false
@@ -35,7 +30,7 @@ export interface InterfaceProgressProps
   /**
    * Pseudo prop to give Prop to filled track
    */
-  _filledTrack?: InterfaceBoxProps<IProgressProps>;
+  _filledTrack?: IBoxProps<IProgressProps>;
   /**
    * Min progress value
    * @default 0
@@ -48,7 +43,6 @@ export interface InterfaceProgressProps
   max?: number;
 }
 
-export type IProgressProps = InterfaceProgressProps & CustomProps<'Progress'>;
 const Progress = (props: IProgressProps, ref?: any) => {
   const {
     min,
@@ -64,13 +58,6 @@ const Progress = (props: IProgressProps, ref?: any) => {
     return null;
   }
 
-  let valueWidth =
-    value < max && value > min
-      ? ((value - min) / (max - min)) * 100
-      : value > min
-      ? 100
-      : 0;
-
   return (
     <Box
       {...resolvedProps}
@@ -80,10 +67,25 @@ const Progress = (props: IProgressProps, ref?: any) => {
       accessibilityValue={{
         min: min,
         max: max,
-        now: valueWidth,
+        now:
+          value < max && value > min
+            ? ((value - min) / (max - min)) * 100
+            : value > min
+            ? 100
+            : 0,
       }}
     >
-      <Box w={`${valueWidth}%`} {..._filledTrack}>
+      <Box
+        // {...resolvedProps}
+        {..._filledTrack}
+        w={
+          value < max && value > min
+            ? ((value - min) / (max - min)) * 100 + '%'
+            : value > min
+            ? '100%'
+            : '0%'
+        }
+      >
         {children}
       </Box>
     </Box>

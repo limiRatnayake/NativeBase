@@ -1,3 +1,2 @@
-import type { CustomProps } from '../../../components/types/utils';
-import type { InterfaceBoxProps } from '../../primitives/Box';
-export type IKbdProps = InterfaceBoxProps<IKbdProps> & CustomProps<'Kbd'>;
+import type { IBoxProps } from '../../primitives';
+export type IKbdProps = IBoxProps<IKbdProps>;

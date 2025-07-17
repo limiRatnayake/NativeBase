@@ -1,12 +1,4 @@
-export const Flex = {
-  baseStyle: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-};
-
-export const Spacer = {
-  baseStyle: {
-    flexGrow: 1,
-  },
+const defaultProps = { flexDirection: 'column' };
+export default {
+  defaultProps,
 };

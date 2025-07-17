@@ -1,12 +1,5 @@
-import type { CustomProps } from '../../../components/types/utils';
-import type { InterfaceBoxProps } from '../../../components/primitives/Box/types';
+import type { IBoxProps } from '../../primitives';
 
-export interface InterfaceCenterProps extends InterfaceBoxProps<ICenterProps> {}
-export type ICircleProps = InterfaceBoxProps<ICircleProps> & {
-  size?: number | string;
-};
-export type ISquareProps = InterfaceBoxProps<ISquareProps> & {
-  size?: number | string;
-};
-
-export type ICenterProps = InterfaceCenterProps & CustomProps<'Center'>;
+export interface ICenterProps extends IBoxProps<ICenterProps> {}
+export type ICircleProps = IBoxProps<ICircleProps> & { size?: number | string };
+export type ISquareProps = IBoxProps<ISquareProps> & { size?: number | string };

@@ -1,17 +1,24 @@
 import React from 'react';
-import Box from '../../primitives/Box';
+import Center from './Center';
 import type { ICircleProps } from './types';
-import { usePropsResolution } from '../../../hooks/useThemeProps';
 import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
 
-const Circle = (props: ICircleProps, ref: any) => {
-  const resolvedProps = usePropsResolution('Circle', props);
-
+const Circle = ({ style, size, ...props }: ICircleProps, ref: any) => {
   //TODO: refactor for responsive prop
   if (useHasResponsiveProps(props)) {
     return null;
   }
-  return <Box {...resolvedProps} ref={ref} />;
+  return (
+    <Center
+      rounded="full"
+      size={size}
+      {...props}
+      ref={ref}
+      height={props.height ? props.height : undefined}
+      width={props.width ? props.width : undefined}
+      style={style}
+    />
+  );
 };
 
 export default React.memo(React.forwardRef(Circle));

@@ -1,17 +1,16 @@
 import type { MutableRefObject } from 'react';
-import type { InterfaceBoxProps } from '../../primitives/Box';
+import type { IBoxProps, ITextProps } from '../../primitives';
 import type { IStackProps } from '../../primitives/Stack/Stack';
-import type { CustomProps, ResponsiveValue } from '../../../components/types';
+import type { ResponsiveValue } from '../../../components/types';
 import type { ISizes } from '../../../theme/base/sizes';
 import type { IColors } from '../../../theme/base/colors';
-export interface InterfaceSkeletonProps
-  extends InterfaceBoxProps<ISkeletonProps> {
+export interface ISkeletonProps extends IBoxProps<ISkeletonProps> {
   /**
    * The fadeIn duration in seconds
    */
   fadeDuration?: number;
   /**
-   * If true, it will render its children
+   * If true, it'll render its children
    */
   isLoaded?: boolean;
   /**
@@ -33,13 +32,13 @@ export interface InterfaceSkeletonProps
   size?: ResponsiveValue<ISizes | (string & {}) | number>;
 }
 
-export interface ISkeletonTextProps extends IStackProps {
+export interface ISkeletonTextProps extends ITextProps {
   /**
    * The fadeIn duration in seconds
    */
   fadeDuration?: number;
   /**
-   * If true, it will render its children
+   * If true, it'll render its children
    */
   isLoaded?: boolean;
   /**
@@ -55,18 +54,17 @@ export interface ISkeletonTextProps extends IStackProps {
    */
   endColor?: ResponsiveValue<IColors | (string & {})>;
   /**
-   * Number of Lines in text
+   * No of Lines in text
    */
-  lines?: number;
+  noOfLines?: number;
   /**
-   * Stying for each line
+   * Space between two lines
    */
-  _line?: Partial<ISkeletonProps>;
-
+  space?: number | string;
   /**
-   * Props to be passed to the Stack used inside.
+   * VStack props
    */
-  _stack?: Partial<IStackProps>;
+  _stack?: IStackProps;
 }
 
 export type ISkeletonComponentType = ((
@@ -79,5 +77,3 @@ export type ISkeletonComponentType = ((
     (props: ISkeletonTextProps & { ref?: MutableRefObject<any> }) => JSX.Element
   >;
 };
-
-export type ISkeletonProps = InterfaceSkeletonProps & CustomProps<'Skeleton'>;

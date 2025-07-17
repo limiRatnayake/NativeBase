@@ -11,5 +11,4 @@ export const PopoverContext = React.createContext({
   setBodyMounted: (() => {}) as any,
   headerMounted: false,
   bodyMounted: false,
-  isOpen: false,
 });

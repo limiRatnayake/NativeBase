@@ -1,15 +1,13 @@
 import type { PlatformProps } from '../../types';
 import type { StyledProps } from '../../../theme/types';
 import type { ResponsiveValue } from '../../types/responsiveValue';
+import type { ISizes } from '../../../theme/base/sizes';
 import type { SvgProps } from 'react-native-svg';
 import type { IColors } from '../../../theme/base/colors';
-
-import type { CustomProps, ThemeComponentSizeType } from '../../types/utils';
-
-export interface InterfaceIconProps
+export interface IIconProps
   extends Omit<
       SvgProps,
-      'opacity' | 'stroke' | 'height' | 'width' | 'transform' | 'color'
+      'opacity' | 'fill' | 'stroke' | 'height' | 'width' | 'transform' | 'color'
     >,
     StyledProps,
     PlatformProps<IIconProps> {
@@ -26,7 +24,7 @@ export interface InterfaceIconProps
   /**
    * The size of the icon.
    */
-  size?: ThemeComponentSizeType<'Icon'>;
+  size?: ResponsiveValue<ISizes | (string & {}) | number>;
 
   /**
    * The color of the icon.
@@ -69,5 +67,3 @@ export interface IcreateIconProps {
    */
   d?: string;
 }
-
-export type IIconProps = InterfaceIconProps & CustomProps<'Icon'>;

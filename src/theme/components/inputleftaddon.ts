@@ -1,25 +1,15 @@
-const baseStyle = () => {
-  return {
-    // roundedLeft: '4',
-    p: '2',
-    borderWidth: '1',
-    borderRightWidth: '0',
-    borderLeftRadius: 'sm',
-    _text: {
-      color: 'text.900',
-      fontWeight: 400,
-    },
-    alignItems: 'center',
-    justifyContent: 'center',
-    bg: 'muted.50',
-    borderColor: 'muted.300',
+import { mode } from './../tools';
 
-    _dark: {
-      bg: 'muted.800',
-      borderColor: 'muted.700',
-      _text: {
-        color: 'text.50',
-      },
+const baseStyle = (props: Record<string, any>) => {
+  return {
+    borderRightWidth: '0',
+    roundedLeft: '4',
+    bg: mode('gray.50', 'gray.700')(props),
+    p: '2',
+    borderColor: mode('gray.300', 'gray.600')(props),
+    borderWidth: '1',
+    _text: {
+      color: mode('muted.400', 'muted.500')(props),
     },
   };
 };

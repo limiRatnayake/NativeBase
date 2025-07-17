@@ -10,27 +10,14 @@ import {
   useFocus,
   useIsPressed,
 } from '../../primitives/Pressable/Pressable';
-import { useFocusRing } from '@react-native-aria/focus';
-import merge from 'lodash.merge';
 
 const IconButton = (
-  {
-    icon,
-    _icon: pseudoIconProp,
-    children,
-    isHovered: isHoveredProp,
-    isPressed: isPressedProp,
-    isFocused: isFocusedProp,
-    isFocusVisible: isFocusVisibleProp,
-    isDisabled,
-    ...props
-  }: IIconButtonProps,
+  { icon, children, ...props }: IIconButtonProps,
   ref: any
 ) => {
   const { hoverProps, isHovered } = useHover();
   const { pressableProps, isPressed } = useIsPressed();
   const { focusProps, isFocused } = useFocus();
-  const { isFocusVisible, focusProps: focusRingProps }: any = useFocusRing();
 
   const {
     _icon,
@@ -41,17 +28,11 @@ const IconButton = (
     onFocus,
     onBlur,
     ...resolvedProps
-  } = usePropsResolution(
-    'IconButton',
-    { ...props, _icon: merge({}, pseudoIconProp, icon?.props) },
-    {
-      isHovered: isHoveredProp || isHovered,
-      isPressed: isPressedProp || isPressed,
-      isFocused: isFocusedProp || isFocused,
-      isFocusVisible: isFocusVisibleProp || isFocusVisible,
-      isDisabled,
-    }
-  );
+  } = usePropsResolution('IconButton', props, {
+    isHovered,
+    isPressed,
+    isFocused,
+  });
 
   let clonedIcon;
   if (icon) {
@@ -67,7 +48,6 @@ const IconButton = (
 
   return (
     <Pressable
-      disabled={isDisabled}
       accessibilityRole="button"
       ref={ref}
       onPressIn={composeEventHandlers(onPressIn, pressableProps.onPressIn)}
@@ -78,13 +58,13 @@ const IconButton = (
       onHoverOut={composeEventHandlers(onHoverOut, hoverProps.onHoverOut)}
       // @ts-ignore - web only
       onFocus={composeEventHandlers(
-        composeEventHandlers(onFocus, focusProps.onFocus),
-        focusRingProps.onFocus
+        composeEventHandlers(onFocus, focusProps.onFocus)
+        // focusRingProps.onFocu
       )}
       // @ts-ignore - web only
       onBlur={composeEventHandlers(
-        composeEventHandlers(onBlur, focusProps.onBlur),
-        focusRingProps.onBlur
+        composeEventHandlers(onBlur, focusProps.onBlur)
+        // focusRingProps.onBlur
       )}
       {...resolvedProps}
     >

@@ -1,29 +1,22 @@
 import type { SwitchProps } from 'react-native';
-import type {
-  CustomProps,
-  ThemeComponentSizeType,
-  ResponsiveValue,
-} from '../../../components/types';
-import type { IColors } from '../../../theme/base/colors';
-import type { InterfaceBoxProps } from '../Box';
-import type { ColorSchemeType } from '../../../components/types';
+import type { StyledProps } from '../../../theme/types';
 
-export interface InterfaceSwitchProps
+import type { ResponsiveValue } from '../../../components/types';
+import type { ISizes } from '../../../theme/base/sizes';
+import type { IColors } from '../../../theme/base/colors';
+
+export interface ISwitchProps
   extends Omit<SwitchProps, 'tintColor'>,
-    InterfaceBoxProps<ISwitchProps> {
+    StyledProps {
   /**
    * The size (width and height) of the switch.
    * @default md
    */
-  size?: ThemeComponentSizeType<'Switch'>;
+  size?: ResponsiveValue<ISizes | (string & {}) | number>;
   /**
    * If true, set the disabled to the invalid state.
    */
   isDisabled?: boolean;
-  /**
-   * If true, set the hovered state.
-   */
-  isHovered?: boolean;
   /**
    * The input name of the Switch when used in a form.
    */
@@ -31,7 +24,7 @@ export interface InterfaceSwitchProps
   /**
    * Function called when the state of the Switch changes.
    */
-  onToggle?: (...args: any) => void;
+  onToggle?: () => any;
   /**
    * If true, set the Switch to the checked state.
    */
@@ -63,11 +56,9 @@ export interface InterfaceSwitchProps
   /**
    * Color scheme to be used for the Switch
    */
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   /**
    * Props when Switch is hovered. Accepts all the Switch props.
    */
-  _hover?: Omit<Partial<ISwitchProps>, '_hover'>;
+  _hover?: Omit<ISwitchProps, '_hover'>;
 }
-
-export type ISwitchProps = InterfaceSwitchProps & CustomProps<'Switch'>;

@@ -9,12 +9,9 @@ import Backdrop from '../Backdrop';
 import { FocusScope } from '@react-native-aria/focus';
 import { PresenceTransition } from '../Transitions';
 import { StyleSheet } from 'react-native';
-import { useId } from '@react-native-aria/utils';
+import { useId } from '@react-aria/utils';
 import { Overlay } from '../../primitives/Overlay';
 import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
-import uniqueId from 'lodash.uniqueid';
-import { ResponsiveQueryContext } from '../../../utils/useResponsiveQuery/ResponsiveQueryProvider';
-import { usePropsResolution } from '../../../hooks/useThemeProps';
 
 const Popover = (
   {
@@ -26,15 +23,11 @@ const Popover = (
     defaultIsOpen,
     initialFocusRef,
     finalFocusRef,
-    useRNModal,
     trapFocus = true,
-    _backdrop,
     ...props
   }: IPopoverProps,
   ref: any
 ) => {
-  const { _overlay } = usePropsResolution('Popover', props);
-
   const triggerRef = React.useRef(null);
   const mergedRef = mergeRefs([triggerRef]);
   const [isOpen, setIsOpen] = useControllableState({
@@ -47,18 +40,8 @@ const Popover = (
 
   const [bodyMounted, setBodyMounted] = React.useState(false);
   const [headerMounted, setHeaderMounted] = React.useState(false);
-  let id = uniqueId();
-  const responsiveQueryContext = React.useContext(ResponsiveQueryContext);
-  const disableCSSMediaQueries = responsiveQueryContext.disableCSSMediaQueries;
 
-  if (!disableCSSMediaQueries) {
-    // This if statement technically breaks the rules of hooks, but is safe
-    // because the condition never changes after mounting.
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    id = useId();
-  }
-
-  const popoverContentId = `${id}-content`;
+  const popoverContentId = `${useId()}-content`;
   const headerId = `${popoverContentId}-header`;
   const bodyId = `${popoverContentId}-body`;
 
@@ -90,13 +73,7 @@ const Popover = (
   return (
     <Box ref={ref}>
       {updatedTrigger()}
-      <Overlay
-        isOpen={isOpen}
-        onRequestClose={handleClose}
-        useRNModalOnAndroid
-        useRNModal={useRNModal}
-        {..._overlay}
-      >
+      <Overlay isOpen={isOpen} onRequestClose={handleClose} useRNModalOnAndroid>
         <PresenceTransition
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 150 } }}
@@ -105,7 +82,7 @@ const Popover = (
           style={StyleSheet.absoluteFill}
         >
           <Popper onClose={handleClose} triggerRef={triggerRef} {...props}>
-            <Backdrop onPress={handleClose} bg="transparent" {..._backdrop} />
+            <Backdrop onPress={handleClose} bg="transparent" />
             <PopoverContext.Provider
               value={{
                 onClose: handleClose,
@@ -118,7 +95,6 @@ const Popover = (
                 bodyMounted,
                 setBodyMounted,
                 setHeaderMounted,
-                isOpen,
               }}
             >
               <FocusScope contain={trapFocus} restoreFocus autoFocus>

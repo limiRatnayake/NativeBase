@@ -1,13 +1,7 @@
-import type { CustomProps } from '../../../components/types';
-import type { InterfaceBoxProps } from '../../primitives/Box';
-import type { ColorSchemeType } from '../../../components/types';
+import type { IBoxProps } from '../../primitives/Box';
 
-export interface InterfaceTagProps extends InterfaceBoxProps<ITagProps> {
+export interface ITagProps extends IBoxProps<ITagProps> {
   variant?: 'solid' | 'subtle' | 'outline';
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   size?: string | number;
 }
-
-export type IInputComponentType = (props: ITagProps) => JSX.Element;
-
-export type ITagProps = InterfaceTagProps & CustomProps<'Tag'>;

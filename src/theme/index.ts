@@ -5,7 +5,7 @@ import type { StyledProps } from '../theme/types';
 //@ts-ignore
 import type { ColorModeOptions } from './../core/color-mode/types';
 export interface ComponentTheme {
-  baseStyle?: ((props: any) => StyledProps) | StyledProps;
+  baseStyle?: (props: any) => StyledProps | StyledProps;
   sizes?: Record<string, ((props: any) => StyledProps) | StyledProps>;
   variants?: Record<string, ((props: any) => StyledProps) | StyledProps>;
   defaultProps?: Record<string, any>;
@@ -31,4 +31,4 @@ export interface ITheme extends ICustomTheme, Omit<Theme, keyof ICustomTheme> {}
 export { theme, tools as themeTools };
 
 export { getColor } from './styled-system';
-export * from './v33x-theme';
+export { StyledProps } from './types';

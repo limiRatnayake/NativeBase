@@ -50,7 +50,6 @@ const PinInputFiled = (
   }
   return (
     <Input
-      //@ts-ignore
       ref={mergeRefs([myRef, ref])}
       {...context}
       {...props}

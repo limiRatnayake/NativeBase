@@ -13,7 +13,9 @@ export const InputLeftAddon = memo(
     }
     return (
       <Box {...resolvedProps} ref={ref}>
-        {props.children}
+        <Box m="auto" _text={resolvedProps._text || { fontWeight: 600 }}>
+          {props.children}
+        </Box>
       </Box>
     );
   })
@@ -27,7 +29,9 @@ export const InputRightAddon = memo(
     }
     return (
       <Box {...resolvedProps} ref={ref}>
-        {props.children}
+        <Box m="auto" _text={resolvedProps._text || { fontWeight: 600 }}>
+          {props.children}
+        </Box>
       </Box>
     );
   })

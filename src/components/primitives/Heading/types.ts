@@ -1,14 +1,11 @@
-import type { InterfaceTextProps } from '../Text/types';
+import type { ITextProps } from '../Text';
+import type { ResponsiveValue } from '../../../components/types';
+import type { ISizes } from '../../../theme/base/sizes';
 
-import type { CustomProps, ThemeComponentSizeType } from '../../types/utils';
-
-export interface IterfaceHeadingProps
-  extends InterfaceTextProps<IHeadingProps> {
+export interface IHeadingProps extends ITextProps {
   /**
    * The size of the heading.
    * @default xl
    */
-  size?: ThemeComponentSizeType<'Heading'>;
+  size?: ResponsiveValue<ISizes | (string & {}) | number>;
 }
-
-export type IHeadingProps = IterfaceHeadingProps & CustomProps<'Heading'>;

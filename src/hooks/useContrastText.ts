@@ -24,9 +24,6 @@ export function useContrastText(bg: string, color?: string) {
 
   const [accessibleColors] = useAccessibleColors();
 
-  if (useNativeBaseConfig('NativeBaseConfigProvider').disableContrastText) {
-    return trueColor;
-  }
   if (typeof bg !== 'string') {
     return;
   }
@@ -79,8 +76,8 @@ function getAccessibleContrastColor(
   }
   let trueContrastColor;
   let contrastColorToken;
-  const darkTextConstrast = getContrastRatio(trueBg, trueDarkText);
-  const lightTextConstrast = getContrastRatio(trueBg, trueLightText);
+  let darkTextConstrast = getContrastRatio(trueBg, trueDarkText);
+  let lightTextConstrast = getContrastRatio(trueBg, trueLightText);
 
   if (
     darkTextConstrast >= contrastThreshold ||

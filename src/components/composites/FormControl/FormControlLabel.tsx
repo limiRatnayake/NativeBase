@@ -14,7 +14,7 @@ const FormControlLabel = (
   const formControlContext = useFormControlContext();
   const combinedProps = combineContextAndProps(formControlContext, props);
   const _ref = React.useRef<HTMLLabelElement>(null);
-  const { _astrick, ...resolvedProps } = usePropsResolution(
+  const { astrickColor, ...reslovedProps } = usePropsResolution(
     'FormControlLabel',
     combinedProps,
     {
@@ -32,7 +32,7 @@ const FormControlLabel = (
         //@ts-ignore
         accessibilityRole: 'presentation',
       }}
-      {..._astrick}
+      color={astrickColor}
     >
       *
     </Text>
@@ -43,24 +43,26 @@ const FormControlLabel = (
       // RN web doesn't support htmlFor for Label element yet
       if (props.htmlFor) {
         _ref.current.htmlFor = props.htmlFor;
-      } else if (resolvedProps?.nativeID) {
-        _ref.current.htmlFor = resolvedProps.nativeID;
+      } else if (reslovedProps?.nativeID) {
+        _ref.current.htmlFor = reslovedProps.nativeID;
       }
     }
-  }, [resolvedProps?.nativeID, props.htmlFor]);
+  }, [reslovedProps?.nativeID, props.htmlFor]);
 
   return (
     <Box
+      flexDirection="row"
+      justifyContent="flex-start"
       _web={{
         //@ts-ignore
         accessibilityRole: 'label',
       }}
-      {...resolvedProps}
-      nativeID={resolvedProps?.labelId}
+      {...reslovedProps}
+      nativeID={reslovedProps?.labelId}
       ref={mergedRef}
     >
       {children}
-      {resolvedProps?.isRequired && requiredAsterisk()}
+      {reslovedProps?.isRequired && requiredAsterisk()}
     </Box>
   );
 };

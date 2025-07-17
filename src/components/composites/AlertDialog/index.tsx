@@ -6,7 +6,7 @@ import AlertDialogFooter from './AlertDialogFooter';
 import AlertDialogHeader from './AlertDialogHeader';
 import type { IAlertDialogComponentType } from './types';
 
-const AlertDialogTemp: any = AlertDialog;
+let AlertDialogTemp: any = AlertDialog;
 
 AlertDialogTemp.Content = AlertDialogContent;
 AlertDialogTemp.CloseButton = AlertDialogCloseButton;
@@ -17,4 +17,4 @@ AlertDialogTemp.Body = AlertDialogBody;
 const AlertDialogMain = AlertDialogTemp as IAlertDialogComponentType;
 
 export { AlertDialogMain as AlertDialog };
-export type { IAlertDialogProps } from './types';
+export { IAlertDialogProps } from './types';

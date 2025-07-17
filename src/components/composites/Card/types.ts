@@ -1,5 +1,3 @@
-import type { CustomProps } from '../../../components/types/utils';
-import type { InterfaceBoxProps } from '../../primitives/Box';
+import type { IBoxProps } from '../../primitives';
 
-export interface InterfaceCardProps extends InterfaceBoxProps<ICardProps> {}
-export type ICardProps = InterfaceCardProps & CustomProps<'Card'>;
+export interface ICardProps extends IBoxProps<ICardProps> {}

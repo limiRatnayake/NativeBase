@@ -1,13 +1,11 @@
 import type { RefObject } from 'react';
 import type { ViewProps } from 'react-native';
-import type { IBoxProps, InterfaceBoxProps } from '../../primitives/Box';
-import type { InterfaceIconProps } from '../../primitives/Icon/types';
-import type { ColorSchemeType } from '../../../components/types';
+import type { IBoxProps, IIconProps } from '../../primitives';
 
-export type ITabsProps = InterfaceBoxProps<ITabsProps> & {
+export type ITabsProps = IBoxProps<ITabsProps> & {
   align?: 'center' | 'end' | 'start';
   id?: string;
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   index?: number;
   defaultIndex?: number;
   isFitted?: boolean;
@@ -20,14 +18,14 @@ export type ITabsProps = InterfaceBoxProps<ITabsProps> & {
   keyboardActivation?: 'manual' | 'automatic';
 };
 
-export type ITabBarProps = InterfaceBoxProps<ITabBarProps> & {
+export type ITabBarProps = IBoxProps<ITabBarProps> & {
   align?: 'center' | 'end' | 'start';
   isFitted?: boolean;
   size?: 'sm' | 'md' | 'lg';
   tablistRef?: RefObject<any>;
   tabListProps?: ViewProps;
 };
-export type ITabProps = InterfaceBoxProps<ITabProps> & {
+export type ITabProps = IBoxProps<ITabProps> & {
   isDisabled?: boolean;
   _active?: any;
   _disabled?: any;
@@ -35,8 +33,8 @@ export type ITabProps = InterfaceBoxProps<ITabProps> & {
   item?: any;
 };
 
-export type ITabViewsProps = IBoxProps;
-export type ITabViewProps = IBoxProps & {
+export type ITabViewsProps = IBoxProps<ITabViewsProps>;
+export type ITabViewProps = IBoxProps<ITabViewProps> & {
   index?: number;
 };
 
@@ -70,6 +68,6 @@ export type ITabsComponentType = ((
     (props: ITabViewProps & { ref?: any }) => JSX.Element
   >;
   Icon: React.MemoExoticComponent<
-    (props: InterfaceIconProps & { ref?: any }) => JSX.Element
+    (props: IIconProps & { ref?: any }) => JSX.Element
   >;
 };

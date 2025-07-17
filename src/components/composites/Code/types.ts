@@ -1,9 +1,5 @@
-import type { CustomProps } from '../../../components/types/utils';
-import type { InterfaceBoxProps } from '../../primitives/Box';
-import type { ColorSchemeType } from '../../../components/types';
+import type { IBoxProps } from '../../primitives/Box';
 
-export type InterfaceCodeProps = InterfaceBoxProps<ICodeProps> & {
-  colorScheme?: ColorSchemeType;
+export type ICodeProps = IBoxProps<ICodeProps> & {
+  colorScheme?: string | undefined;
 };
-
-export type ICodeProps = InterfaceCodeProps & CustomProps<'Code'>;

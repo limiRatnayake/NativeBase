@@ -1,11 +1,10 @@
 import type { ViewProps } from 'react-native';
 import type { StyledProps } from '../../../theme/types';
+import type { IColors } from '../../../theme/base/colors';
 import type {
   SafeAreaProps,
   PlatformProps,
   ResponsiveValue,
-  ColorType,
-  CustomProps,
 } from '../../types';
 import type { ITextProps } from './../Text/types';
 
@@ -14,11 +13,11 @@ export interface ILinearGradientProps {
     colors: Array<string>;
     start?: Array<number>;
     end?: Array<number>;
-    locations?: Array<number>;
+    location?: Array<number>;
   };
 }
 
-export interface InterfaceBoxProps<T = null>
+export interface IBoxProps<T = null>
   extends ViewProps,
     SafeAreaProps,
     PlatformProps<T extends null ? IBoxProps<any> : T>,
@@ -34,16 +33,11 @@ export interface InterfaceBoxProps<T = null>
   /**
    * For providing props to Text inside Box
    */
-  _text?: Partial<ITextProps>;
-  bg?: ResponsiveValue<ColorType | (string & {}) | ILinearGradientProps>;
-  background?: ResponsiveValue<
-    ColorType | (string & {}) | ILinearGradientProps
-  >;
-  bgColor?: ResponsiveValue<ColorType | (string & {}) | ILinearGradientProps>;
+  _text?: ITextProps;
+  bg?: ResponsiveValue<IColors | (string & {}) | ILinearGradientProps>;
+  background?: ResponsiveValue<IColors | (string & {}) | ILinearGradientProps>;
+  bgColor?: ResponsiveValue<IColors | (string & {}) | ILinearGradientProps>;
   backgroundColor?: ResponsiveValue<
-    ColorType | (string & {}) | ILinearGradientProps
+    IColors | (string & {}) | ILinearGradientProps
   >;
-  // gap?: ResponsiveValue<number | string>;
 }
-
-export type IBoxProps<T = null> = InterfaceBoxProps<T> & CustomProps<'Box'>;

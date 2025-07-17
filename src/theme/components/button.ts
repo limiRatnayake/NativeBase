@@ -1,280 +1,261 @@
-import type { InterfaceButtonProps } from '../../components/primitives/Button/types';
+import { Dict, mode, transparentize } from './../tools';
+import { Platform } from 'react-native';
+const disabledTextColor = (props: any) => mode(`muted.500`, `muted.300`)(props);
 
-const baseStyle = (props: InterfaceButtonProps & { theme: any }) => {
+const baseStyle = (props: any) => {
   const { primary } = props.theme.colors;
+  const focusRing =
+    Platform.OS === 'web'
+      ? mode(
+          { boxShadow: `${primary[400]} 0px 0px 0px 2px`, zIndex: 1 },
+          { boxShadow: `${primary[500]} 0px 0px 0px 2px`, zIndex: 1 }
+        )(props)
+      : {};
 
   return {
-    borderRadius: 'sm', // '4px'
+    borderRadius: 'sm',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     _web: {
-      _disabled: {
-        cursor: 'not-allowed',
-      },
-      _loading: {
-        cursor: 'not-allowed',
-      },
-      cursor: 'pointer',
-      userSelect: 'none',
+      cursor: props.isDisabled
+        ? 'not-allowed'
+        : props.isLoading
+        ? 'default'
+        : 'pointer',
+    },
+    _text: {
+      fontWeight: 'medium',
     },
     _focusVisible: {
-      _web: {
-        outlineWidth: '0',
-        style: { boxShadow: `${primary[400]} 0px 0px 0px 2px` },
-      },
-    },
-    _dark: {
-      _focusVisible: {
-        _web: {
-          outlineWidth: '0',
-          style: { boxShadow: `${primary[500]} 0px 0px 0px 2px` },
-        },
-      },
+      style: props.variant !== 'unstyled' ? { ...focusRing } : {},
     },
     _stack: {
-      space: '1.5',
+      space: 2,
       alignItems: 'center',
     },
     _loading: {
-      opacity: '40',
+      opacity: '80',
     },
     _disabled: {
-      opacity: '40',
+      opacity: '50',
     },
     _spinner: {
       size: 'sm',
-      focusable: false,
     },
   };
 };
 
-function variantGhost({ colorScheme }: InterfaceButtonProps) {
-  return {
-    _text: {
-      color: `${colorScheme}.600`,
-    },
-    _icon: {
-      color: `${colorScheme}.600`,
-    },
-    _spinner: {
-      color: `${colorScheme}.600`,
-    },
-    _hover: {
-      bg: `${colorScheme}.600:alpha.10`,
-    },
-    _pressed: {
-      bg: `${colorScheme}.600:alpha.20`,
-    },
-
-    _dark: {
+function variantGhost(props: Dict) {
+  const { colorScheme: c } = props;
+  if (c === 'muted') {
+    return {
       _text: {
-        color: `${colorScheme}.500`,
+        color: disabledTextColor(props),
       },
-      _icon: {
-        color: `${colorScheme}.500`,
-      },
-      _spinner: {
-        color: `${colorScheme}.500`,
-      },
-      _hover: {
-        bg: `${colorScheme}.500:alpha.10`,
-      },
-      _pressed: {
-        bg: `${colorScheme}.500:alpha.20`,
-      },
+    };
+  }
+
+  return {
+    _text: {
+      color: props.isDisabled
+        ? disabledTextColor(props)
+        : mode(`${c}.500`, `${c}.300`)(props),
+    },
+    bg: 'transparent',
+    _web: {
+      outlineWidth: '0',
+    },
+    _hover: {
+      borderColor: mode(`${c}.500`, `${c}.200`)(props),
+      bg: transparentize(mode(`${c}.200`, `${c}.400`)(props), 0.5)(props.theme),
+    },
+    _focusVisible: {
+      borderColor: mode(`${c}.700`, `${c}.200`)(props),
+      bg: transparentize(mode(`${c}.200`, `${c}.400`)(props), 0.5)(props.theme),
+    },
+    _pressed: {
+      borderColor: mode(`${c}.600`, `${c}.200`)(props),
+      bg: transparentize(mode(`${c}.300`, `${c}.500`)(props), 0.5)(props.theme),
+    },
+    _spinner: {
+      size: 'sm',
     },
   };
 }
 
-function variantOutline({ colorScheme }: InterfaceButtonProps) {
+function variantOutline(props: Dict) {
+  const { colorScheme: c } = props;
+  const borderColor = mode(`muted.200`, `muted.500`)(props);
   return {
-    borderWidth: '1px',
-    borderColor: 'muted.300',
-    _text: {
-      color: `${colorScheme}.600`,
+    borderWidth: '1',
+    borderColor:
+      c === 'muted'
+        ? borderColor
+        : props.isDisabled
+        ? disabledTextColor(props)
+        : mode(`${c}.300`, `${c}.300`)(props),
+    ...variantGhost(props),
+  };
+}
+
+function variantSolid(props: Dict) {
+  const { colorScheme: c } = props;
+  let bg = `${c}.500`;
+  if (props.isDisabled) {
+    bg = mode(`muted.300`, `muted.500`)(props);
+  }
+
+  const styleObject = {
+    _web: {
+      outlineWidth: '0',
     },
-    _icon: {
-      color: `${colorScheme}.600`,
-    },
-    _spinner: {
-      color: `${colorScheme}.600`,
-    },
+    bg,
     _hover: {
-      bg: `${colorScheme}.600:alpha.10`,
+      bg: `${c}.600`,
     },
     _pressed: {
-      bg: `${colorScheme}.600:alpha.20`,
+      bg: `${c}.700`,
     },
+    _focus: {
+      bg: `${c}.600`,
+    },
+    _loading: {
+      bg: mode(`warmGray.50`, `${c}.300`)(props),
+      opacity: '50',
+    },
+    _disabled: { bg: mode(`trueGray.300`, `trueGray.600`)(props) },
+  };
 
-    _dark: {
-      borderColor: 'muted.700',
+  return styleObject;
+}
+
+// function getBg(props: Record<string, any>) {
+//   const { theme, status, variant } = props;
+//   let { colorScheme } = props;
+
+//   colorScheme = getColorScheme(
+//     props,
+//     colorScheme !== 'primary' ? colorScheme : status
+//   );
+//   const lightBg =
+//     variant === 'solid'
+//       ? getColor(theme, `${colorScheme}.400`, colorScheme)
+//       : getColor(theme, `${colorScheme}.100`, colorScheme);
+
+//   const darkBg =
+//     variant === 'solid'
+//       ? getColor(theme, `${colorScheme}.700`, colorScheme)
+//       : getColor(theme, `${colorScheme}.400`, colorScheme);
+//   return mode(lightBg, darkBg)(props);
+// }
+
+function variantSubtle(props: Dict) {
+  const { colorScheme: c } = props;
+  let bg = `${c}.100`;
+  bg = mode(bg, `${c}.200`)(props);
+  let color;
+  if (props.isDisabled) {
+    bg = mode(`muted.300`, `muted.500`)(props);
+  } else {
+    color = mode(`${c}.500`, `${c}.600`)(props);
+  }
+  const styleObject = {
+    _text: {
+      color: color,
+    },
+    _web: {
+      outlineWidth: '0',
+    },
+    bg,
+    _hover: {
+      _text: { color: mode(`${c}.600`, `${c}.700`)(props) },
+      bg: mode(`${c}.200`, `${c}.300`)(props),
+    },
+    _pressed: {
+      _text: { color: mode(`${c}.700`, `${c}.800`)(props) },
+      bg: mode(`${c}.300`, `${c}.400`)(props),
+    },
+  };
+
+  return styleObject;
+}
+
+function variantLink(props: Dict) {
+  const { colorScheme: c } = props;
+
+  return {
+    ...variantGhost(props),
+    _text: {
+      textDecorationLine: Platform.select({
+        ios: 'underline',
+        web: 'underline',
+      }),
+      color:
+        c === 'muted'
+          ? mode(`muted.800`, `${c}.200`)(props)
+          : props.isDisabled
+          ? disabledTextColor(props)
+          : mode(`${c}.500`, `${c}.300`)(props),
+    },
+    _hover: {
       _text: {
-        color: `${colorScheme}.500`,
-      },
-      _icon: {
-        color: `${colorScheme}.500`,
-      },
-      _spinner: {
-        color: `${colorScheme}.500`,
-      },
-      _hover: {
-        bg: `${colorScheme}.500:alpha.10`,
-      },
-      _pressed: {
-        bg: `${colorScheme}.500:alpha.20`,
+        color: mode(`${c}.600`, `${c}.400`)(props),
+        textDecorationLine: 'underline',
       },
     },
-  };
-}
-
-function variantSolid({ colorScheme }: InterfaceButtonProps) {
-  return {
-    _text: {
-      color: 'text.50',
-    },
-    _icon: {
-      color: 'text.50',
-    },
-    _spinner: {
-      color: 'text.50',
-    },
-    bg: `${colorScheme}.600`,
-    _hover: {
-      bg: `${colorScheme}.700`,
-    },
-    _pressed: {
-      bg: `${colorScheme}.800`,
-    },
-
-    _dark: {
-      bg: `${colorScheme}.600`,
-      _hover: {
-        bg: `${colorScheme}.700`,
-      },
-      _pressed: {
-        bg: `${colorScheme}.800`,
-      },
-    },
-  };
-}
-
-function variantSubtle({ colorScheme }: InterfaceButtonProps) {
-  return {
-    bg: `${colorScheme}.100`,
-    _text: {
-      color: `${colorScheme}.900`,
-    },
-    _icon: {
-      color: `${colorScheme}.900`,
-    },
-    _spinner: {
-      color: `${colorScheme}.900`,
-    },
-    _hover: {
-      bg: `${colorScheme}.200`,
-    },
-    _pressed: {
-      bg: `${colorScheme}.300`,
-    },
-
-    _dark: {
-      bg: `${colorScheme}.300`,
-      _hover: {
-        bg: `${colorScheme}.200`,
-      },
-      _pressed: {
-        bg: `${colorScheme}.100`,
-      },
-    },
-  };
-}
-
-function variantLink({ colorScheme }: InterfaceButtonProps) {
-  return {
-    _icon: {
-      color: `${colorScheme}.600`,
-    },
-    _spinner: {
-      color: `${colorScheme}.600`,
-    },
-
-    _hover: {
+    _focusVisible: {
       _text: {
+        color: mode(`${c}.600`, `${c}.400`)(props),
         textDecorationLine: 'underline',
       },
     },
     _pressed: {
-      _text: {
-        color: `${colorScheme}.800`,
-        textDecorationLine: 'underline',
-      },
-    },
-
-    _text: {
-      color: `${colorScheme}.600`,
-    },
-    _dark: {
-      _text: {
-        color: `${colorScheme}.500`,
-      },
-      _pressed: {
-        _text: {
-          color: `${colorScheme}.300`,
-        },
-      },
+      _text: { color: mode(`${c}.700`, `${c}.500`)(props) },
     },
   };
+}
+
+function variantUnstyled() {
+  return {};
 }
 
 const variants = {
-  ghost: variantGhost as any,
-  outline: variantOutline as any,
-  solid: variantSolid as any,
-  subtle: variantSubtle as any,
-  link: variantLink as any,
-  unstyled: {} as any,
+  ghost: variantGhost,
+  outline: variantOutline,
+  solid: variantSolid,
+  subtle: variantSubtle,
+  link: variantLink,
+  unstyled: variantUnstyled,
 };
 
 const sizes = {
   lg: {
-    px: '3',
-    py: '3',
+    px: '4',
+    py: '2',
     _text: {
       fontSize: 'md',
-    },
-    _icon: {
-      size: 'md',
     },
   },
   md: {
     px: '3',
-    py: '2.5',
+    py: '2',
     _text: {
       fontSize: 'sm',
     },
-    _icon: {
-      size: 'sm',
-    },
   },
   sm: {
-    px: '3',
+    px: '2',
     py: '2',
     _text: {
       fontSize: 'xs',
     },
-    _icon: {
-      size: 'sm',
-    },
   },
   xs: {
-    px: '3',
+    px: '2',
     py: '2',
     _text: {
       fontSize: '2xs',
-    },
-    _icon: {
-      size: 'xs',
     },
   },
 };

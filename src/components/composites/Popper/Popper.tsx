@@ -40,7 +40,7 @@ const Popper = (
 };
 
 const PopperContent = React.forwardRef(
-  ({ children, style, ...rest }: IBoxProps & { isOpen: boolean }, ref: any) => {
+  ({ children, style, ...rest }: IBoxProps, ref: any) => {
     const {
       triggerRef,
       shouldFlip,
@@ -52,7 +52,6 @@ const PopperContent = React.forwardRef(
       setOverlayRef,
     } = usePopperContext('PopperContent');
     const overlayRef = React.useRef(null);
-
     // const { top } = useSafeAreaInsets();
     const {
       overlayProps,
@@ -64,7 +63,7 @@ const PopperContent = React.forwardRef(
       overlayRef,
       shouldFlip: shouldFlip,
       crossOffset: crossOffset,
-      isOpen: rest.isOpen,
+      isOpen: true,
       offset: offset,
       placement: placementProp as any,
       containerPadding: 0,
@@ -72,7 +71,7 @@ const PopperContent = React.forwardRef(
       shouldOverlapWithTrigger,
     });
 
-    const restElements: React.ReactNode[] = [];
+    let restElements: React.ReactNode[] = [];
     let arrowElement: React.ReactElement | null = null;
 
     React.useEffect(() => {
@@ -183,7 +182,7 @@ const PopperArrow = React.forwardRef(
       [actualPlacement, height, width]
     );
 
-    const triangleStyle: ViewStyle = React.useMemo(
+    let triangleStyle: ViewStyle = React.useMemo(
       () => ({
         position: 'absolute',
         width,
@@ -192,9 +191,9 @@ const PopperArrow = React.forwardRef(
       [width, height]
     );
 
-    const arrowStyles = React.useMemo(
-      () => [arrowProps?.style, triangleStyle, additionalStyles, style],
-      [triangleStyle, additionalStyles, arrowProps?.style, style]
+    let arrowStyles = React.useMemo(
+      () => [arrowProps.style, triangleStyle, additionalStyles, style],
+      [triangleStyle, additionalStyles, arrowProps.style, style]
     );
 
     return (
@@ -211,7 +210,7 @@ const PopperArrow = React.forwardRef(
 );
 
 const getArrowStyles = (props: IArrowStyles) => {
-  const additionalStyles: any = {
+  let additionalStyles: any = {
     transform: [],
   };
 

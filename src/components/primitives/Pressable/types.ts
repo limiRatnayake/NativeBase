@@ -1,7 +1,7 @@
 import type { PressableProps } from 'react-native';
 import type { StyledProps } from '../../../theme/types';
-import type { CustomProps, PlatformProps } from '../../types';
-export interface InterfacePressableProps<T = IPressableProps>
+import type { PlatformProps } from '../../types';
+export interface IPressableProps<T = IPressableProps<unknown>>
   extends PressableProps,
     StyledProps,
     PlatformProps<T> {
@@ -24,45 +24,25 @@ export interface InterfacePressableProps<T = IPressableProps>
   /**
    * Style props to be applied when hovered
    */
-  _hover?: Omit<Partial<T>, '_hover'>;
+  _hover?: Omit<IPressableProps, '_hover'>;
   /**
    * Style props to be applied when pressed
    */
-  _pressed?: Omit<Partial<T>, '_pressed'>;
+  _pressed?: Omit<IPressableProps, '_pressed'>;
   /**
    * Style props to be applied when focus
    */
-  _focus?: Omit<Partial<T>, '_focus'>;
+  _focus?: Omit<IPressableProps, '_focus'>;
 
   /**
    * Style props to be applied when disabled
    */
-  _disabled?: Omit<Partial<T>, '_disabled'>;
+  _disabled?: Omit<IPressableProps, '_disabled'>;
 
-  /**
-   * 	If true, the p will be disabled.
-   */
-  isDisabled?: boolean;
-  /**
-   * 	If true, the p will be hovered.
-   */
-  isHovered?: boolean;
-  /**
-   * 	If true, the p will be pressed.
-   */
-  isPressed?: boolean;
-  /**
-   * 	If true, the p will be focused.
-   */
-  isFocused?: boolean;
-  /**
-   * 	If true, the focus ring will be visible .
-   */
-  isFocusVisible?: boolean;
   /**
    * Style props to be applied when focus visible. These styles will be only applied when user is interacting the app using a keyboard. (Web only)
    */
-  _focusVisible?: Omit<Partial<T>, '_focusVisible'>;
+  _focusVisible?: Omit<IPressableProps, '_focusVisible'>;
 
   children?:
     | React.ReactNode
@@ -76,10 +56,3 @@ export interface InterfacePressableProps<T = IPressableProps>
         isFocused: boolean;
       }) => any);
 }
-
-// export type IPressableProps<T> =
-//   | InterfacePressableProps<T>
-//   & CustomProps<'Pressable'>;
-
-export type IPressableProps = InterfacePressableProps<IPressableProps> &
-  CustomProps<'Pressable'>;

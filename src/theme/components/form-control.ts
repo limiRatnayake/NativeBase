@@ -1,69 +1,45 @@
+import { mode } from '../tools';
+
 // FormControl
-export const FormControl = {
-  baseStyle: {
-    width: '100%',
-  },
-};
+export const FormControl = {};
 
 // FormControlErrorMessage
 export const FormControlErrorMessage = {
-  baseStyle: () => {
+  baseStyle: (props: Record<string, any>) => {
     return {
       mt: '2',
       _text: {
         fontSize: 'xs',
-        color: 'error.600',
+        color: mode('danger.600', 'danger.300')(props),
       },
       _stack: { space: 1, alignItems: 'center' },
-      _dark: {
-        _text: {
-          color: 'error.500',
-        },
-      },
     };
   },
 };
 
 // FormControlLabel
 export const FormControlLabel = {
-  baseStyle: () => {
+  baseStyle: (props: Record<string, any>) => {
     return {
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
       _text: {
         fontSize: 'sm',
         fontWeight: 'medium',
-        color: 'text.500',
       },
-      my: '1',
-      _astrick: {
-        color: 'error.600',
-      },
-      _dark: {
-        _text: {
-          color: 'text.400',
-        },
-        _astrick: {
-          color: 'error.500',
-        },
-      },
+      astrickColor: mode('danger.600', 'danger.300')(props),
+      mb: '2',
+      mr: '3',
     };
   },
 };
 
 // FormControlHelperText
 export const FormControlHelperText = {
-  baseStyle: () => {
+  baseStyle: (props: Record<string, any>) => {
     return {
       mt: '2',
       _text: {
         fontSize: 'xs',
-        color: 'text.500',
-      },
-      _dark: {
-        _text: {
-          color: 'text.400',
-        },
+        color: mode('muted.500', 'muted.400')(props),
       },
     };
   },

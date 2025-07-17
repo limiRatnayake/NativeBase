@@ -1,9 +1,9 @@
 import type { ImageProps, ImageSourcePropType } from 'react-native';
 import type { StyledProps } from '../../../theme/types';
 import type { ITextProps } from '../../primitives';
-import type { CustomProps, PlatformProps } from '../../types';
+import type { PlatformProps } from '../../types';
 
-export interface InterfaceImageProps
+export interface IImageProps
   extends PlatformProps<IImageProps>,
     Omit<
       ImageProps,
@@ -22,23 +22,23 @@ export interface InterfaceImageProps
    */
   source?: ImageSourcePropType;
   /**
-   * The alt text that describes the image. This will be added as accessibilityLabel in android/iOS and alt on web.
+   * The alt text that describes the image. This will be added as accessibilityLabel in android/iOS and alt on web
    */
   alt?: string;
   /**
-   * In the event of an error loading the src, specify a fallback source.
+   * In event there was an error loading the src, specify a fallback source.
    */
   fallbackSource?: ImageSourcePropType;
   /**
-   * Opt out of the fallbackSource logic and show alternative text.
+   * Opt out of the fallbackSource logic and show alternative text
    */
   ignoreFallback?: boolean;
   /**
    * Text styling for alt.
    */
-  _alt?: Partial<ITextProps>;
+  _alt?: ITextProps;
   /**
-   * In the event of an error loading the src, specify a fallback JSX Element.
+   * In event there was an error loading the src, specify a fallback JSX Element.
    */
   fallbackElement?: JSX.Element | JSX.Element[];
   /**
@@ -46,5 +46,3 @@ export interface InterfaceImageProps
    */
   src?: string;
 }
-
-export type IImageProps = InterfaceImageProps & CustomProps<'Image'>;

@@ -1,7 +1,6 @@
-import type { IIconProps } from '../../primitives';
+import type { IBoxProps, IIconProps } from '../../primitives';
 import type { ICollapseProps } from '../../composites/Collapse';
 import type { MutableRefObject } from 'react';
-import type { InterfaceBoxProps } from '../../primitives/Box/types';
 
 export type IAccordionProps = ICollapseProps & {
   allowMultiple?: boolean;
@@ -10,13 +9,13 @@ export type IAccordionProps = ICollapseProps & {
   defaultIndex?: number[];
   onChange?: (index?: number[]) => void;
 };
-export type IAccordionItemProps = InterfaceBoxProps<IAccordionItemProps> & {
+export type IAccordionItemProps = IBoxProps<IAccordionItemProps> & {
   index?: number;
   defaultIsOpen?: boolean;
   isDisabled?: boolean;
   id?: number;
 };
-export type IAccordionSummaryProps = InterfaceBoxProps<IAccordionSummaryProps> & {
+export type IAccordionSummaryProps = IBoxProps<IAccordionSummaryProps> & {
   _expanded?: Omit<IAccordionSummaryProps, '_expanded'>;
   _disabled?: Omit<IAccordionSummaryProps, '_disabled'>;
   _hover?: Omit<IAccordionSummaryProps, '_hover'>;

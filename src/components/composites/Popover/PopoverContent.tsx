@@ -21,7 +21,6 @@ export const PopoverContent = React.forwardRef(
       bodyMounted,
       bodyId,
       headerId,
-      isOpen,
     } = React.useContext(PopoverContext);
     const resolvedProps = usePropsResolution('PopoverContent', props);
 
@@ -52,8 +51,8 @@ export const PopoverContent = React.forwardRef(
 
     let arrowElement = null;
     const restChildren: any = [];
-    React.Children.toArray(props.children).forEach((child: any) => {
-      if (child?.type?.displayName === 'PopperArrow') {
+    React.Children.forEach(props.children, (child) => {
+      if (child.type.displayName === 'PopperArrow') {
         arrowElement = React.cloneElement(child, {
           backgroundColor: child.props.color ?? color,
         });
@@ -81,8 +80,8 @@ export const PopoverContent = React.forwardRef(
         nativeID={popoverContentId}
         {...accessibilityProps}
         {...resolvedProps}
+        {...props}
         ref={ref}
-        isOpen={isOpen}
       >
         {arrowElement}
         {restChildren}

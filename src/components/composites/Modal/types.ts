@@ -1,28 +1,28 @@
-import type { InterfaceBoxProps } from '../../primitives/Box';
+import type { IBoxProps } from '../../primitives/Box';
 import type { IIconButtonProps } from '../../composites/IconButton';
 import type { MutableRefObject } from 'react';
-import type { CustomProps } from '../../../components/types';
+
+import type { ResponsiveValue } from '../../../components/types';
+import type { ISizes } from '../../../theme/base/sizes';
 import type { IScrollViewProps } from '../../basic/ScrollView';
-import type { IFadeProps, ISlideProps } from '../Transitions';
-import type { ThemeComponentSizeType } from '../../../components/types/utils';
-import type { IOverlayProps } from '../../primitives/Overlay';
-export interface InterfaceModalProps extends InterfaceBoxProps<IModalProps> {
+
+export interface IModalProps extends IBoxProps<IModalProps> {
   /**
-   * If true, the modal will open. Useful for controllable state behavior.
+   * If true, the modal will open. Useful for controllable state behaviour
    */
   isOpen?: boolean;
   /**
-   * Callback invoked when the modal is closed.
+   * Callback invoked when the modal is closed
    */
   onClose?: any;
   /**
-   * If true, the modal will be opened by default.
+   * If true, the modal will be opened by default
    */
   defaultIsOpen?: boolean;
   /**
-   * The size of the modal.
+   * The size of the modal
    */
-  size?: ThemeComponentSizeType<'Modal'>;
+  size?: ResponsiveValue<ISizes | (string & {}) | number>;
   /**
    * The ref of element to receive focus when the modal opens.
    */
@@ -32,27 +32,27 @@ export interface InterfaceModalProps extends InterfaceBoxProps<IModalProps> {
    */
   finalFocusRef?: React.RefObject<any>;
   /**
-   * If true and the keyboard is opened, the modal will move up equivalent to the keyboard height.
+   * If true and the keyboard is opened, the modal will move up equvivalent to the keyboard height.
    * @default false
    */
   avoidKeyboard?: boolean;
   /**
-   * If true, the modal will close when the overlay is clicked.
+   * If true, the modal will close when the overlay is clicked
    * @default true
    */
   closeOnOverlayClick?: boolean;
   /**
-   * If true, the modal will close when Escape key is pressed.
+   * If true, the modal will close when Escape key is pressed
    * @default true
    */
   isKeyboardDismissable?: boolean;
   /**
-   * If true, a backdrop element is visible.
+   * If true, a backdrop element is visible
    * @default true
    */
   overlayVisible?: boolean;
   /**
-   * If true, a backdrop element is visible.
+   * If true, a backdrop element is visible
    * @default true
    */
   backdropVisible?: boolean;
@@ -61,31 +61,10 @@ export interface InterfaceModalProps extends InterfaceBoxProps<IModalProps> {
    */
   _backdrop?: any;
   /**
-   * Sets the animation type.
+   * Sets the animation type
    * @default "fade"
    */
   animationPreset?: 'fade' | 'slide';
-  /**
-   * Props applied on Overlay Animation.
-   */
-  _backdropFade?: Partial<IFadeProps>;
-  /**
-   * Props applied on Child Fade Animation.
-   */
-  _fade?: Partial<IFadeProps>;
-  /**
-   * Props applied on Child Slide Animation.
-   */
-  _slide?: Partial<ISlideProps>;
-  /**
-   * Props to be passed to the Overlay used inside of Modal.
-   */
-  _overlay?: IOverlayProps;
-  /**
-   * If true, renders react-native native modal
-   * @default false
-   */
-  useRNModal?: boolean;
 }
 
 export type IModalComponentType = ((
@@ -93,9 +72,7 @@ export type IModalComponentType = ((
 ) => JSX.Element) & {
   Body: React.MemoExoticComponent<
     (
-      props: InterfaceBoxProps<IModalProps> & {
-        _scrollview?: IScrollViewProps;
-      } & {
+      props: IBoxProps<IModalProps> & { _scrollview?: IScrollViewProps } & {
         ref?: MutableRefObject<any>;
       }
     ) => JSX.Element
@@ -105,19 +82,17 @@ export type IModalComponentType = ((
   >;
   Content: React.MemoExoticComponent<
     (
-      props: InterfaceBoxProps<IModalProps> & { ref?: MutableRefObject<any> }
+      props: IBoxProps<IModalProps> & { ref?: MutableRefObject<any> }
     ) => JSX.Element
   >;
   Footer: React.MemoExoticComponent<
     (
-      props: InterfaceBoxProps<IModalProps> & { ref?: MutableRefObject<any> }
+      props: IBoxProps<IModalProps> & { ref?: MutableRefObject<any> }
     ) => JSX.Element
   >;
   Header: React.MemoExoticComponent<
     (
-      props: InterfaceBoxProps<IModalProps> & { ref?: MutableRefObject<any> }
+      props: IBoxProps<IModalProps> & { ref?: MutableRefObject<any> }
     ) => JSX.Element
   >;
 };
-
-export type IModalProps = InterfaceModalProps & CustomProps<'Modal'>;

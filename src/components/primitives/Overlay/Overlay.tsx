@@ -1,35 +1,25 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { OverlayContainer } from '@react-native-aria/overlays';
 import React from 'react';
-import type { ViewStyle } from 'react-native';
-import { Modal, Platform } from 'react-native';
+import { Platform } from 'react-native';
+import { Modal } from 'react-native';
 import { useKeyboardDismissable } from '../../../hooks';
 import { ExitAnimationContext } from './ExitAnimationContext';
 
-export interface IOverlayProps {
+interface IOverlayProps {
   isOpen?: boolean;
   children?: any;
   // We use RN modal on android if needed as it supports shifting accessiblity focus to the opened view. IOS automatically shifts focus if an absolutely placed view appears in front.
   useRNModalOnAndroid?: boolean;
-  useRNModal?: boolean;
-  onRequestClose?: any;
+  onRequestClose?: (() => any) | undefined;
   isKeyboardDismissable?: boolean;
-  animationPreset?: 'fade' | 'slide' | 'none';
-  style?: ViewStyle;
-  unmountOnExit?: boolean;
 }
 
 export function Overlay({
   children,
   isOpen,
-  useRNModal = false,
   useRNModalOnAndroid = false,
   isKeyboardDismissable = true,
-  //@ts-ignore
-  animationPreset = 'fade',
   onRequestClose,
-  style,
-  unmountOnExit,
 }: IOverlayProps) {
   const [exited, setExited] = React.useState(!isOpen);
 
@@ -37,41 +27,25 @@ export function Overlay({
     enabled: isOpen && isKeyboardDismissable,
     callback: onRequestClose ? onRequestClose : () => {},
   });
-  const styleObj = { ...style };
-  if (animationPreset === 'slide') {
-    styleObj.overflow = 'hidden';
-    styleObj.display = 'flex';
-  } else {
-    styleObj.display = exited && !isOpen ? 'none' : 'flex';
-  }
 
-  if (unmountOnExit && !isOpen && exited) {
+  if (exited && !isOpen) {
     return null;
   }
 
-  if (useRNModal || (useRNModalOnAndroid && Platform.OS === 'android')) {
+  // Android handles multiple Modal in RN and is better for accessibility as it shifts accessibility focus on mount, however it may not needed in case of tooltips, toast where one doesn't need to shift accessibility focus
+  if (Platform.OS === 'android' && useRNModalOnAndroid) {
     return (
       <ExitAnimationContext.Provider value={{ exited, setExited }}>
-        <Modal
-          statusBarTranslucent
-          transparent
-          visible={isOpen}
-          onRequestClose={onRequestClose}
-          animationType={animationPreset}
-        >
+        <Modal transparent visible={true} onRequestClose={onRequestClose}>
           {children}
         </Modal>
       </ExitAnimationContext.Provider>
     );
   }
 
-  if (unmountOnExit && !isOpen && exited) {
-    return null;
-  }
-
+  // Since OverlayContainer mounts children in NativeBaseProvider  using Context, we need to pass the context by wrapping children
   return (
-    //@ts-ignore
-    <OverlayContainer style={{ ...styleObj }}>
+    <OverlayContainer>
       <ExitAnimationContext.Provider value={{ exited, setExited }}>
         {children}
       </ExitAnimationContext.Provider>

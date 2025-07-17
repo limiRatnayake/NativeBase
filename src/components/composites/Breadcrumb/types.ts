@@ -1,13 +1,13 @@
 import type { IHStackProps } from '../../primitives/Stack/HStack';
 import type { ITextProps, ILinkProps, IIconProps } from '../../primitives';
 import type { MutableRefObject } from 'react';
-import type { CustomProps, SpaceType } from '../../types';
+import type { SpaceType } from '../../types';
 export interface IBreadcrumbItemContext {
   isCurrent?: boolean;
   allChildren?: boolean;
 }
 
-export interface InterfaceBreadcrumbProps extends IHStackProps {
+export interface IBreadcrumbProps extends IHStackProps {
   spacing?: SpaceType;
   separator?: string | JSX.Element | JSX.Element[] | any;
   maxItems?: number | number[];
@@ -43,6 +43,3 @@ export type IBreadcrumbComponentType = ((
     (props: IBreadcrumbTextProps & { ref?: any }) => JSX.Element
   >;
 };
-
-export type IBreadcrumbProps = InterfaceBreadcrumbProps &
-  CustomProps<'Breadcrumb'>;

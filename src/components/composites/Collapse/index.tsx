@@ -1,11 +1,10 @@
 import isNil from 'lodash.isnil';
 import React, { useEffect, useRef, forwardRef } from 'react';
 import { ViewStyle, LayoutAnimation, UIManager, Platform } from 'react-native';
-import { Box } from '../../primitives';
+import { Box, IBoxProps } from '../../primitives';
 import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
-import type { InterfaceBoxProps } from '../../primitives/Box';
-import type { CustomProps } from '../../../components/types';
-export type InterfaceCollapseProps = InterfaceBoxProps<ICollapseProps> & {
+
+export type ICollapseProps = IBoxProps<ICollapseProps> & {
   style?: ViewStyle;
   endingHeight?: number;
   startingHeight?: number;
@@ -15,8 +14,6 @@ export type InterfaceCollapseProps = InterfaceBoxProps<ICollapseProps> & {
   onAnimationEnd?: Function;
   onAnimationStart?: Function;
 };
-
-export type ICollapseProps = InterfaceCollapseProps & CustomProps<'Box'>;
 
 function usePrevious(value: any) {
   const ref = useRef();
@@ -99,7 +96,7 @@ const Collapse = (
       <Box
         //@ts-ignore
         overflow={Platform.OS === 'web' ? 'auto' : 'scroll'}
-        onLayout={(e: any) => provideSize(e.nativeEvent.layout)}
+        onLayout={(e) => provideSize(e.nativeEvent.layout)}
         {...props}
       />
     </Box>

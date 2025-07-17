@@ -1,18 +1,16 @@
-import type { ITextProps } from '../../primitives';
+import type { IBoxProps, ITextProps } from '../../primitives';
 import type { ViewStyle } from 'react-native';
-import type { CustomProps, ResponsiveValue } from '../../../components/types';
+import type { ResponsiveValue } from '../../../components/types';
 import type { ISizes } from '../../../theme/base/sizes';
 import type { IColors } from '../../../theme/base/colors';
-import type { InterfaceBoxProps } from '../../../components/primitives/Box/types';
-import type { ColorSchemeType } from '../../../components/types';
 
-export type InterfaceCircularProgressProps = InterfaceBoxProps<ICircularProgressProps> & {
+export type ICircularProgressProps = IBoxProps<ICircularProgressProps> & {
   style?: ViewStyle;
   children?: JSX.Element | JSX.Element[] | string;
   value: number;
   size?: ResponsiveValue<ISizes | (string & {}) | number>;
   thickness?: number;
-  colorScheme?: ColorSchemeType;
+  colorScheme?: string;
   color?: ResponsiveValue<IColors | (string & {})>;
   trackColor?: ResponsiveValue<IColors | (string & {})>;
   isIndeterminate?: boolean;
@@ -20,6 +18,3 @@ export type InterfaceCircularProgressProps = InterfaceBoxProps<ICircularProgress
   min?: number;
   _text?: ITextProps;
 };
-
-export type ICircularProgressProps = InterfaceCircularProgressProps &
-  CustomProps<'CircularProgress'>;

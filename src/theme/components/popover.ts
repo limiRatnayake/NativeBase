@@ -1,83 +1,35 @@
-export const Popover = {
-  baseStyle: () => ({
-    _overlay: {
-      unmountOnExit: true,
-    },
-  }),
-};
+import { mode } from '../tools';
 
 export const PopoverCloseButton = {
-  baseStyle: () => ({
+  baseStyle: (props: any) => ({
     position: 'absolute',
     right: 3,
     top: 3,
     zIndex: 1,
-    p: '2',
-    bg: 'transparent',
-    borderRadius: 'sm',
-    _web: {
-      outlineWidth: 0,
-      cursor: 'pointer',
-    },
+    colorScheme: 'coolGray',
+    p: 2,
     _icon: {
-      size: '4',
-    },
-    _light: {
-      _icon: {
-        color: 'muted.500',
-      },
-      _hover: {
-        bg: 'muted.200',
-      },
-      _pressed: {
-        bg: 'muted.300',
-      },
-    },
-    _dark: {
-      _icon: {
-        color: 'muted.400',
-      },
-      _hover: {
-        bg: 'muted.700',
-      },
-      _pressed: {
-        bg: 'muted.600',
-      },
+      size: 3,
+      color: mode('coolGray.600', 'coolGray.100')(props),
     },
   }),
 };
 
 export const PopoverBody = {
-  baseStyle: () => ({
+  baseStyle: (props: any) => ({
+    pt: '2',
     p: '3',
-    shadow: '6',
-    bg: 'muted.50',
     _text: {
-      color: 'text.900',
-    },
-    _dark: {
-      bg: 'muted.800',
-      _text: {
-        color: 'text.50',
-      },
+      color: mode('coolGray.600', 'coolGray.300')(props),
     },
   }),
 };
 
 export const PopoverContent = {
-  baseStyle: () => ({
-    //TODO: Box inside PopperContent is not able to resolve shadow
-    // shadow: '6',
-    borderColor: 'muted.300',
-    _text: {
-      color: 'text.900',
-    },
-    _dark: {
-      borderColor: 'muted.700',
-      _text: {
-        color: 'text.50',
-      },
-    },
+  baseStyle: (props: any) => ({
+    backgroundColor: mode('coolGray.50', 'gray.700')(props),
+    borderColor: mode('coolGray.200', 'coolGray.600')(props),
+    _text: { color: mode('coolGray.800', 'warmGray.50')(props) },
     borderWidth: 1,
     rounded: 'md',
     overflow: 'hidden',
@@ -85,56 +37,34 @@ export const PopoverContent = {
 };
 
 export const PopoverHeader = {
-  baseStyle: () => ({
-    _web: {
-      accessibilityRole: 'header',
-    },
-    p: '4',
+  baseStyle: (props: any) => ({
+    py: '4',
+    px: '3',
     borderBottomWidth: '1',
+    borderColor: mode('coolGray.200', 'gray.600')(props),
     _text: {
       fontSize: 'md',
-      fontWeight: '700',
+      fontWeight: 'semibold',
+      color: mode('coolGray.800', 'warmGray.50')(props),
       lineHeight: 'sm',
-      color: 'text.900',
-    },
-    bg: 'muted.50',
-    borderColor: 'muted.300',
-    _dark: {
-      bg: 'muted.800',
-      borderColor: 'muted.700',
-      _text: {
-        color: 'text.50',
-      },
     },
   }),
 };
 
 export const PopoverArrow = {
-  baseStyle: () => ({
-    bg: 'muted.50',
-    borderColor: 'muted.300',
-    _dark: {
-      bg: 'muted.800',
-      borderColor: 'muted.700',
-    },
+  baseStyle: (props: any) => ({
+    borderColor: mode('coolGray.200', 'coolGray.600')(props),
   }),
 };
 
 export const PopoverFooter = {
-  baseStyle: () => {
+  baseStyle: (props: Record<string, any>) => {
     return {
-      p: '4',
-      shadow: '6',
+      p: '3',
+      bg: mode('coolGray.100', 'gray.600')(props),
       flexDirection: 'row',
       justifyContent: 'flex-end',
       flexWrap: 'wrap',
-      borderTopWidth: 1,
-      bg: 'muted.50',
-      borderColor: 'muted.300',
-      _dark: {
-        bg: 'muted.800',
-        borderColor: 'muted.700',
-      },
     };
   },
 };

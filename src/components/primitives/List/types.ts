@@ -28,15 +28,15 @@ export interface IListProps extends IStackProps {
   /**
    * common _hover that is passed to all the children.
    */
-  _hover?: Partial<IStackProps>;
+  _hover?: IStackProps;
   /**
    * common _focus that is passed to all the children.
    */
-  _focus?: Partial<IStackProps>;
+  _focus?: IStackProps;
   /**
    * common _pressed that is passed to all the children.
    */
-  _pressed?: Partial<IStackProps>;
+  _pressed?: IStackProps;
   /**
    * Ordered List index starting value.
    * @default 0
@@ -45,7 +45,7 @@ export interface IListProps extends IStackProps {
   /**
    * Props to style the commonly all the List.Item's text.
    */
-  _text?: Partial<ITextProps>;
+  _text?: ITextProps;
 }
 
 export interface IListItemProps extends IPressableProps {
@@ -73,7 +73,7 @@ export interface IListItemProps extends IPressableProps {
   /**
    * Props to style the child text.
    */
-  _text?: Partial<Omit<ITextProps, '_text'>>;
+  _text?: Omit<ITextProps, '_text'>;
 }
 export type IListComponentType = ((
   props: IListProps & { ref?: any }

@@ -19,12 +19,6 @@ const InputBase = (
     disableFocusHandling,
     inputProps,
     wrapperRef,
-    InputLeftElement,
-    InputRightElement,
-    leftElement,
-    rightElement,
-    isHovered: isHoveredProp,
-    isFocused: isFocusedProp,
     ...props
   }: IInputProps & {
     disableFocusHandling?: boolean;
@@ -32,11 +26,6 @@ const InputBase = (
   },
   ref: any
 ) => {
-  let passUnresolvedProps;
-  if (InputLeftElement || InputRightElement || leftElement || rightElement) {
-    passUnresolvedProps = true;
-  }
-
   const [isFocused, setIsFocused] = React.useState(false);
   const handleFocus = (focusState: boolean, callback: any) => {
     !disableFocusHandling && setIsFocused(focusState);
@@ -66,7 +55,6 @@ const InputBase = (
     fontFamily,
     fontWeight,
     fontStyle,
-    _webInputBase,
     ...resolvedProps
   } = usePropsResolution(
     'Input',
@@ -76,8 +64,8 @@ const InputBase = (
     },
     {
       isDisabled: inputThemeProps.isDisabled,
-      isHovered: isHoveredProp || isHovered,
-      isFocused: isFocusedProp || isFocused,
+      isHovered,
+      isFocused,
       isInvalid: inputThemeProps.isInvalid,
       isReadOnly: inputThemeProps.isReadOnly,
     }
@@ -107,17 +95,16 @@ const InputBase = (
   ) {
     return null;
   }
-
   return (
     <StyledInput
       {...inputProps}
+      {...resolvedFontFamily}
       secureTextEntry={type === 'password'}
       accessible
       accessibilityLabel={ariaLabel || accessibilityLabel}
       editable={isDisabled || isReadOnly ? false : true}
       w={isFullWidth ? '100%' : undefined}
-      {...(passUnresolvedProps ? props : resolvedProps)}
-      {...resolvedFontFamily}
+      {...resolvedProps}
       placeholderTextColor={resolvedPlaceholderTextColor}
       selectionColor={resolvedSelectionColor}
       underlineColorAndroid={resolvedUnderlineColorAndroid}
@@ -139,7 +126,6 @@ const InputBase = (
           }
         : {})}
       ref={mergeRefs([ref, _ref, wrapperRef])}
-      style={Platform.OS === 'web' ? _webInputBase : {}}
     />
   );
 };

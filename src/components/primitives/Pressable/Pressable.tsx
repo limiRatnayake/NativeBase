@@ -42,29 +42,11 @@ export const useIsPressed = () => {
 
 const StyledPressable = makeStyledComponent(RNPressable);
 
-const Pressable = (
-  {
-    children,
-    isDisabled,
-    disabled,
-    isHovered: isHoveredProp,
-    isPressed: isPressedProp,
-    isFocused: isFocusedProp,
-    isFocusVisible: isFocusVisibleProp,
-    ...props
-  }: IPressableProps,
-  ref: any
-) => {
+const Pressable = ({ children, ...props }: IPressableProps, ref: any) => {
   const { hoverProps, isHovered } = useHover();
   const { pressableProps, isPressed } = useIsPressed();
   const { focusProps, isFocused } = useFocus();
   const { isFocusVisible, focusProps: focusRingProps }: any = useFocusRing();
-
-  const stateProps = {
-    isPressed: isPressedProp || isPressed,
-    isFocused: isFocusedProp || isFocused,
-    isHovered: isHoveredProp || isHovered,
-  };
 
   const {
     onPressIn,
@@ -75,9 +57,10 @@ const Pressable = (
     onBlur,
     ...resolvedProps
   } = usePropsResolution('Pressable', props, {
-    ...stateProps,
-    isFocusVisible: isFocusVisibleProp || isFocusVisible,
-    isDisabled: disabled || isDisabled,
+    isPressed,
+    isFocused,
+    isHovered,
+    isFocusVisible,
   });
 
   // TODO: Replace Render props with Context Hook
@@ -87,7 +70,7 @@ const Pressable = (
     return null;
   }
 
-  // TODO: Replace Render props with Context Hook
+  // TODO : Replace Render props with Context Hook
   return (
     <StyledPressable
       ref={ref}
@@ -107,10 +90,15 @@ const Pressable = (
         composeEventHandlers(onBlur, focusProps.onBlur),
         focusRingProps.onBlur
       )}
-      disabled={disabled || isDisabled}
       {...resolvedProps}
     >
-      {typeof children !== 'function' ? children : children({ ...stateProps })}
+      {typeof children !== 'function'
+        ? children
+        : children({
+            isPressed,
+            isHovered,
+            isFocused,
+          })}
     </StyledPressable>
   );
 };
