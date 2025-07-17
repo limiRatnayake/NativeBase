@@ -1,9 +1,3 @@
-export default {
-  multiply(a: number, b: number) {
-    return Promise.resolve(a * b);
-  },
-};
-
 import {
   // AppBar,
   Badge,
@@ -87,28 +81,34 @@ import {
   IMenuOptionGroupProps,
   SimpleGrid,
   ISimpleGridProps,
-  Tabs,
+  // Tabs,
   ITagProps,
-  ITabsProps,
-  ITabBarProps,
-  ITabProps,
-  ITabViewsProps,
-  ITabViewProps,
-  ITabsContextProps,
+  // ITabsProps,
+  // ITabBarProps,
+  // ITabProps,
+  // ITabViewsProps,
+  // ITabViewProps,
+  // ITabsContextProps,
   Actionsheet,
   IActionsheetProps,
   IActionsheetContentProps,
   IActionsheetItemProps,
   Fab,
   IFabProps,
+  useFormControlContext,
   TextField,
   ITextFieldProps,
   Typeahead,
   useTypeahead,
   Modal,
+  IModalProps,
+  ICardProps,
+  IAvatarProps,
+  IDrawerProps,
   useToast,
   Toast,
   IToastProps,
+  ITooltipProps,
   Backdrop,
   Drawer,
   Tooltip,
@@ -123,6 +123,7 @@ import {
   ICheckboxProps,
   ICheckboxGroupProps,
   Radio,
+  RadioContext,
   IRadioProps,
   IRadioValue,
   IRadioGroupProps,
@@ -171,11 +172,16 @@ import {
   Pressable,
   IPressableProps,
   IStackProps,
+  ITextAreaProps,
+  IZStackProps,
+  Overlay,
+  IOverlayProps,
 } from './components/primitives';
 
 export * from './components/basic';
 export * from './components/primitives/Icon/Icons';
 export * from './theme';
+export { extractInObject, stylingProps } from './theme/tools';
 export * from './core';
 export * from './hooks';
 export * from './factory';
@@ -197,6 +203,7 @@ export {
   Code,
   Checkbox,
   Radio,
+  RadioContext,
   Column,
   Row,
   Center,
@@ -223,6 +230,7 @@ export {
   Container,
   Divider,
   Link,
+  Overlay,
   Pressable,
   Progress,
   Accordion,
@@ -254,9 +262,10 @@ export {
   // useToast,
   Menu,
   SimpleGrid,
-  Tabs,
+  // Tabs,
   Actionsheet,
   Fab,
+  useFormControlContext,
   Typeahead,
   useTypeahead,
   Select,
@@ -267,6 +276,7 @@ export {
   Drawer,
   Tooltip,
 };
+export * from './utils';
 export type {
   IAlertProps,
   IAspectRatioProps,
@@ -310,7 +320,7 @@ export type {
   IFormControlHelperTextProps,
   ISwitchProps,
   IFlexProps,
-  IWrapProps,
+  IOverlayProps,
   IPinInputProps,
   IPinInputFieldProps,
   IPressableProps,
@@ -318,6 +328,12 @@ export type {
   IScaleFadeProps,
   ISlideProps,
   ISlideFadeProps,
+  IModalProps,
+  ICardProps,
+  IAvatarProps,
+  IDrawerProps,
+  ITextAreaProps,
+  IZStackProps,
   INumberInputProps,
   INumberInputFieldProps,
   INumberInputContext,
@@ -331,13 +347,14 @@ export type {
   IMenuGroupProps,
   IMenuOptionGroupProps,
   ISimpleGridProps,
-  ITabsProps,
-  ITabBarProps,
-  ITabProps,
-  ITabViewsProps,
-  ITabViewProps,
-  ITabsContextProps,
+  // ITabsProps,
+  // ITabBarProps,
+  // ITabProps,
+  // ITabViewsProps,
+  // ITabViewProps,
+  // ITabsContextProps,
   IToastProps,
+  ITooltipProps,
   IActionsheetProps,
   IActionsheetContentProps,
   IActionsheetItemProps,
@@ -347,6 +364,8 @@ export type {
   ITextFieldProps,
   IScrollViewProps,
   IStackProps,
+  IWrapProps,
 };
 
-export { ITheme, ICustomTheme, StyledProps } from './theme';
+export type { StyledProps } from './theme/types';
+export type { ITheme, ICustomTheme } from './theme';

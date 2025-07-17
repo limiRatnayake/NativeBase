@@ -1,16 +1,17 @@
 import type { MutableRefObject } from 'react';
-import type { IBoxProps, ITextProps } from '../../primitives';
+import type { InterfaceBoxProps } from '../../primitives/Box';
 import type { IStackProps } from '../../primitives/Stack/Stack';
-import type { ResponsiveValue } from '../../../components/types';
+import type { CustomProps, ResponsiveValue } from '../../../components/types';
 import type { ISizes } from '../../../theme/base/sizes';
 import type { IColors } from '../../../theme/base/colors';
-export interface ISkeletonProps extends IBoxProps<ISkeletonProps> {
+export interface InterfaceSkeletonProps
+  extends InterfaceBoxProps<ISkeletonProps> {
   /**
    * The fadeIn duration in seconds
    */
   fadeDuration?: number;
   /**
-   * If true, it'll render its children
+   * If true, it will render its children
    */
   isLoaded?: boolean;
   /**
@@ -32,13 +33,13 @@ export interface ISkeletonProps extends IBoxProps<ISkeletonProps> {
   size?: ResponsiveValue<ISizes | (string & {}) | number>;
 }
 
-export interface ISkeletonTextProps extends ITextProps {
+export interface ISkeletonTextProps extends IStackProps {
   /**
    * The fadeIn duration in seconds
    */
   fadeDuration?: number;
   /**
-   * If true, it'll render its children
+   * If true, it will render its children
    */
   isLoaded?: boolean;
   /**
@@ -54,17 +55,18 @@ export interface ISkeletonTextProps extends ITextProps {
    */
   endColor?: ResponsiveValue<IColors | (string & {})>;
   /**
-   * No of Lines in text
+   * Number of Lines in text
    */
-  noOfLines?: number;
+  lines?: number;
   /**
-   * Space between two lines
+   * Stying for each line
    */
-  space?: number | string;
+  _line?: Partial<ISkeletonProps>;
+
   /**
-   * VStack props
+   * Props to be passed to the Stack used inside.
    */
-  _stack?: IStackProps;
+  _stack?: Partial<IStackProps>;
 }
 
 export type ISkeletonComponentType = ((
@@ -77,3 +79,5 @@ export type ISkeletonComponentType = ((
     (props: ISkeletonTextProps & { ref?: MutableRefObject<any> }) => JSX.Element
   >;
 };
+
+export type ISkeletonProps = InterfaceSkeletonProps & CustomProps<'Skeleton'>;

@@ -36,7 +36,13 @@ const Menu = (
     },
   });
 
-  const { transition, ...resolvedProps } = usePropsResolution('Menu', props);
+  const {
+    _overlay,
+    _presenceTransition,
+    _backdrop,
+    useRNModal,
+    ...resolvedProps
+  } = usePropsResolution('Menu', props);
   const handleOpen = React.useCallback(() => {
     setIsOpen(true);
   }, [setIsOpen]);
@@ -71,19 +77,26 @@ const Menu = (
   if (useHasResponsiveProps(resolvedProps)) {
     return null;
   }
+
   return (
     <>
       {updatedTrigger()}
-      <Overlay isOpen={isOpen} onRequestClose={handleClose} useRNModalOnAndroid>
-        <PresenceTransition visible={isOpen} {...transition}>
+      <Overlay
+        isOpen={isOpen}
+        onRequestClose={handleClose}
+        useRNModalOnAndroid
+        useRNModal={useRNModal}
+        {..._overlay}
+      >
+        <PresenceTransition visible={isOpen} {..._presenceTransition}>
           <Popper
             triggerRef={triggerRef}
             onClose={handleClose}
             placement={placement}
-            {...props}
+            {...resolvedProps}
           >
-            <Backdrop bg="transparent" onPress={handleClose} />
-            <Popper.Content>
+            <Backdrop onPress={handleClose} {..._backdrop} />
+            <Popper.Content isOpen={isOpen}>
               <MenuContext.Provider
                 value={{ closeOnSelect, onClose: handleClose }}
               >

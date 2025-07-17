@@ -42,11 +42,29 @@ export const useIsPressed = () => {
 
 const StyledPressable = makeStyledComponent(RNPressable);
 
-const Pressable = ({ children, ...props }: IPressableProps, ref: any) => {
+const Pressable = (
+  {
+    children,
+    isDisabled,
+    disabled,
+    isHovered: isHoveredProp,
+    isPressed: isPressedProp,
+    isFocused: isFocusedProp,
+    isFocusVisible: isFocusVisibleProp,
+    ...props
+  }: IPressableProps,
+  ref: any
+) => {
   const { hoverProps, isHovered } = useHover();
   const { pressableProps, isPressed } = useIsPressed();
   const { focusProps, isFocused } = useFocus();
   const { isFocusVisible, focusProps: focusRingProps }: any = useFocusRing();
+
+  const stateProps = {
+    isPressed: isPressedProp || isPressed,
+    isFocused: isFocusedProp || isFocused,
+    isHovered: isHoveredProp || isHovered,
+  };
 
   const {
     onPressIn,
@@ -57,10 +75,9 @@ const Pressable = ({ children, ...props }: IPressableProps, ref: any) => {
     onBlur,
     ...resolvedProps
   } = usePropsResolution('Pressable', props, {
-    isPressed,
-    isFocused,
-    isHovered,
-    isFocusVisible,
+    ...stateProps,
+    isFocusVisible: isFocusVisibleProp || isFocusVisible,
+    isDisabled: disabled || isDisabled,
   });
 
   // TODO: Replace Render props with Context Hook
@@ -70,7 +87,7 @@ const Pressable = ({ children, ...props }: IPressableProps, ref: any) => {
     return null;
   }
 
-  // TODO : Replace Render props with Context Hook
+  // TODO: Replace Render props with Context Hook
   return (
     <StyledPressable
       ref={ref}
@@ -90,15 +107,10 @@ const Pressable = ({ children, ...props }: IPressableProps, ref: any) => {
         composeEventHandlers(onBlur, focusProps.onBlur),
         focusRingProps.onBlur
       )}
+      disabled={disabled || isDisabled}
       {...resolvedProps}
     >
-      {typeof children !== 'function'
-        ? children
-        : children({
-            isPressed,
-            isHovered,
-            isFocused,
-          })}
+      {typeof children !== 'function' ? children : children({ ...stateProps })}
     </StyledPressable>
   );
 };
