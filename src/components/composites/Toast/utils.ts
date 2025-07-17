@@ -1,4 +1,4 @@
-let INSET = 0;
+const INSET = 0;
 export const POSITIONS = {
   'bottom': {
     bottom: INSET,

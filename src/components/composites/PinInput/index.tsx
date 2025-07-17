@@ -7,7 +7,7 @@ export type {
 } from './types';
 import type { IPinInputComponentType } from './types';
 
-let PinInputTemp: any = PinInputMain;
+const PinInputTemp: any = PinInputMain;
 PinInputTemp.Field = PinInputField;
 
 // To add typings

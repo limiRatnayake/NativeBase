@@ -18,7 +18,7 @@ export function useScreenReaderEnabled() {
       handleSetEnabled(res);
     }
 
-    let handler: any = AccessibilityInfo.addEventListener(
+    const handler: any = AccessibilityInfo.addEventListener(
       'screenReaderChanged',
       (event: any) => {
         handleSetEnabled(event);

@@ -9,7 +9,7 @@ export const Example = () => {
         h={20}
         speed={10}
         endColor="green.500"
-      ></Skeleton>
+      />
     </Stack>
   );
 };

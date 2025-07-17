@@ -76,8 +76,8 @@ function getAccessibleContrastColor(
   }
   let trueContrastColor;
   let contrastColorToken;
-  let darkTextConstrast = getContrastRatio(trueBg, trueDarkText);
-  let lightTextConstrast = getContrastRatio(trueBg, trueLightText);
+  const darkTextConstrast = getContrastRatio(trueBg, trueDarkText);
+  const lightTextConstrast = getContrastRatio(trueBg, trueLightText);
 
   if (
     darkTextConstrast >= contrastThreshold ||

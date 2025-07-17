@@ -4,7 +4,7 @@ import { default as FormControlErrorMessage } from './FormControlErrorMessage';
 import { default as FormControlHelperText } from './FormControlHelperText';
 import type { FormControlComponentType } from './types';
 
-let FormControlTemp: any = FormControlBase;
+const FormControlTemp: any = FormControlBase;
 FormControlTemp.Label = FormControlLabel;
 FormControlTemp.ErrorMessage = FormControlErrorMessage;
 FormControlTemp.HelperText = FormControlHelperText;

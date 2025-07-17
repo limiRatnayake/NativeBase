@@ -14,7 +14,7 @@ export const Example = () => {
         startColor="cyan.300"
         endColor="purple.200"
         size="170"
-      ></Skeleton>
+      />
       <VStack
         space={5}
         _web={{ w: 250, h: 170 }}
@@ -27,7 +27,7 @@ export const Example = () => {
           endColor="gray.700"
           h="6"
           w="75%"
-        ></Skeleton>
+        />
         <Skeleton.Text
           w="100%"
           noOfLines={3}
@@ -37,7 +37,7 @@ export const Example = () => {
           endColor="gray.300"
           h={60}
           borderRadius={20}
-        ></Skeleton.Text>
+        />
         <HStack w="80%" ml="auto">
           <Skeleton
             ml="auto"
@@ -46,7 +46,7 @@ export const Example = () => {
             borderRadius={10}
             h={8}
             w="45%"
-          ></Skeleton>
+          />
           <Skeleton
             ml="auto"
             borderRadius={10}
@@ -54,7 +54,7 @@ export const Example = () => {
             endColor="green.700"
             h={8}
             w="45%"
-          ></Skeleton>
+          />
         </HStack>
       </VStack>
     </HStack>

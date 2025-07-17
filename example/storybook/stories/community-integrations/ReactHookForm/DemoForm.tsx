@@ -211,7 +211,7 @@ export const Example = () => {
       </Box>
       <Box py={4}>
         <HStack space={6}>
-          <Box flex={1}></Box>
+          <Box flex={1} />
           <Box flex={2}>
             <Button.Group space={2}>
               <Button _text={{ color: 'white' }}>Save Changes</Button>

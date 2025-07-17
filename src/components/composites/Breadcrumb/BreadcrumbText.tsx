@@ -9,7 +9,7 @@ const BreadcrumbText = (props: IBreadcrumbTextProps, ref?: any) => {
   const { isCurrent }: IBreadcrumbItemContext = React.useContext(
     BreadcrumbItemContext
   );
-  let { children, _current, ...resolvedProps } = usePropsResolution(
+  const { children, _current, ...resolvedProps } = usePropsResolution(
     'BreadcrumbText',
     props
   );

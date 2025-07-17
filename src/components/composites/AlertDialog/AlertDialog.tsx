@@ -48,7 +48,7 @@ const AlertDialog = (
 
   const handleClose = () => setVisible(false);
 
-  let child = (
+  const child = (
     <Box
       bottom={avoidKeyboard ? bottomInset + 'px' : undefined}
       {...restThemeProps}

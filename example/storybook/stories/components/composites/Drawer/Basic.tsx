@@ -19,7 +19,7 @@ const Basic = () => {
           h="100%"
           bg="yellow.200"
           minW={Dimensions.get('window').width / 2}
-        ></Box>
+        />
       </Drawer>
     </>
   );

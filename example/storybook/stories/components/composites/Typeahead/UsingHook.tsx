@@ -11,7 +11,7 @@ import {
 import { ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-let countries = [
+const countries = [
   'Afghanistan',
   'Australia',
   'India',

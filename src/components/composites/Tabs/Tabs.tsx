@@ -13,7 +13,7 @@ import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
 const getTabsAndBars = (children: any) => {
   let bars: any = [];
   let views: any = [];
-  let items = React.Children.toArray(children);
+  const items = React.Children.toArray(children);
   let tabBarProps: any = { props: {}, ref: undefined };
   let tabViewsProps = { props: {}, ref: undefined };
   items.forEach((item: any) => {
@@ -71,7 +71,7 @@ const Tabs = ({ children, ...props }: ITabsProps, ref: any) => {
     keyboardActivation: props.keyboardActivation,
   };
   // useTabsState needs collection children.
-  let state = useTabsState(mappedProps);
+  const state = useTabsState(mappedProps);
   const setAlign = () => {
     switch (align) {
       case 'start':
@@ -84,8 +84,12 @@ const Tabs = ({ children, ...props }: ITabsProps, ref: any) => {
         return 'flex-start';
     }
   };
-  let tablistRef = React.useRef<any>();
-  let { tabListProps, tabPanelProps } = useTabs(mappedProps, state, tablistRef);
+  const tablistRef = React.useRef<any>();
+  const { tabListProps, tabPanelProps } = useTabs(
+    mappedProps,
+    state,
+    tablistRef
+  );
   //TODO: refactor for responsive prop
   if (useHasResponsiveProps(props)) {
     return null;

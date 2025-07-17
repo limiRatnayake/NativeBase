@@ -9,7 +9,7 @@ import { themeTools } from '../../../theme';
 import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
 
 const PinInput = ({ children, ...props }: IPinInputProps, ref?: any) => {
-  let [padding, remProps] = themeTools.extractInObject(props, [
+  const [padding, remProps] = themeTools.extractInObject(props, [
     'p',
     'px',
     'py',
@@ -37,7 +37,7 @@ const PinInput = ({ children, ...props }: IPinInputProps, ref?: any) => {
   );
 
   const handleChange = (newValue: string, fieldIndex: number) => {
-    let temp = (pinInputValue && [...pinInputValue]) || [];
+    const temp = (pinInputValue && [...pinInputValue]) || [];
     temp[fieldIndex] = newValue;
     value === undefined && setPinInputValue(temp.join(''));
     onChange && onChange(temp.join(''));
@@ -51,7 +51,7 @@ const PinInput = ({ children, ...props }: IPinInputProps, ref?: any) => {
     const pinFieldLength = RefList.length;
     const newValueLength = newValue.length;
     if (newValueLength >= pinFieldLength && newValueLength > 2) {
-      let splicedValue = newValue ? [...newValue] : [];
+      const splicedValue = newValue ? [...newValue] : [];
       splicedValue.splice(pinFieldLength);
       RefList[pinFieldLength - 1].current.focus();
       setPinInputValue(splicedValue.join(''));

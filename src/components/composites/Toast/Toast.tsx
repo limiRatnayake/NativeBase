@@ -18,7 +18,7 @@ import Text from '../../primitives/Text';
 import HStack from '../../primitives/Stack/HStack';
 import { useColorMode } from '../../../core/color-mode/hooks';
 
-let INSET = 50;
+const INSET = 50;
 
 const POSITIONS = {
   'top': {
@@ -142,7 +142,7 @@ export const ToastProvider = ({ children }: { children: any }) => {
   >({});
   const themeProps = usePropsResolution('Toast', {});
   const { colorMode } = useColorMode();
-  let toastIndex = React.useRef(1);
+  const toastIndex = React.useRef(1);
 
   const hideAll = () => {
     setVisibleToasts({});
@@ -156,9 +156,9 @@ export const ToastProvider = ({ children }: { children: any }) => {
   };
 
   const isActive = (id: any) => {
-    for (let toastPosition of Object.keys(toastInfo)) {
+    for (const toastPosition of Object.keys(toastInfo)) {
       // @ts-ignore
-      let positionArray: Array<IToast> = toastInfo[toastPosition];
+      const positionArray: Array<IToast> = toastInfo[toastPosition];
       return positionArray.findIndex((toastData) => toastData.id === id) > -1;
     }
 
@@ -167,18 +167,20 @@ export const ToastProvider = ({ children }: { children: any }) => {
 
   const removeToast = (id: any) => {
     setToastInfo((prev) => {
-      for (let toastPosition of Object.keys(prev)) {
+      for (const toastPosition of Object.keys(prev)) {
         // @ts-ignore
-        let positionArray: Array<IToast> = prev[toastPosition];
+        const positionArray: Array<IToast> = prev[toastPosition];
         const isToastPresent =
           positionArray.findIndex((toastData) => toastData.id === id) > -1;
 
         if (isToastPresent) {
-          let newPositionArray = positionArray.filter((item) => item.id !== id);
-          let temp: any = {};
+          const newPositionArray = positionArray.filter(
+            (item) => item.id !== id
+          );
+          const temp: any = {};
           temp[toastPosition] = newPositionArray;
 
-          let newToastInfo = { ...prev, ...temp };
+          const newToastInfo = { ...prev, ...temp };
           return newToastInfo;
         }
       }

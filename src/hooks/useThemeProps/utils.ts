@@ -31,10 +31,10 @@ export function extractProps(
   currentBreakpoint: number
 ) {
   let newProps: any = {};
-  for (let property in props) {
+  for (const property in props) {
     // If the property exists in themePropertyMap then get its value
     if (themePropertyMap[property]) {
-      let propValues = extractPropertyFromFunction(
+      const propValues = extractPropertyFromFunction(
         property,
         props,
         theme,
@@ -43,7 +43,7 @@ export function extractProps(
       if (typeof propValues === 'string' || typeof propValues === 'number') {
         newProps[property] = propValues;
       } else if (!isNil(propValues)) {
-        for (let nestedProp in propValues) {
+        for (const nestedProp in propValues) {
           newProps[nestedProp] = get(
             theme,
             `${themePropertyMap[nestedProp]}.${propValues[nestedProp]}`,
@@ -51,7 +51,7 @@ export function extractProps(
           );
         }
       } else if (property === 'shadow') {
-        let shadowProps = theme[themePropertyMap[property]][props[property]];
+        const shadowProps = theme[themePropertyMap[property]][props[property]];
         if (!isNil(shadowProps)) {
           newProps = { ...newProps, ...shadowProps };
         }
@@ -79,7 +79,7 @@ export function extractProps(
 Remove props from defaultProps that are already present in props
 */
 function filterDefaultProps(props: any, defaultProps: any) {
-  let [, resultProps] = extractInObject(defaultProps, Object.keys(props));
+  const [, resultProps] = extractInObject(defaultProps, Object.keys(props));
   return resultProps;
 }
 
@@ -104,12 +104,12 @@ export const extractPropertyFromFunction = (
     componentTheme &&
     typeof componentTheme[themePropertyMap[property]] === 'function'
   ) {
-    let funcProps = componentTheme[themePropertyMap[property]]({
+    const funcProps = componentTheme[themePropertyMap[property]]({
       theme,
       ...props,
     });
     // Check if returned object from componentTheme is a nested object
-    let isNested: boolean = Object.keys(funcProps).some(function (key) {
+    const isNested: boolean = Object.keys(funcProps).some(function (key) {
       return funcProps[key] && typeof funcProps[key] === 'object';
     });
     // If the returned value is nested object then find the property value in it, otherwise return the whole object
@@ -194,7 +194,10 @@ export function calculateProps(
   props: any,
   windowWidth: any
 ) {
-  let currentBreakpoint = getClosestBreakpoint(theme.breakpoints, windowWidth);
+  const currentBreakpoint = getClosestBreakpoint(
+    theme.breakpoints,
+    windowWidth
+  );
   if (!props) {
     props = {};
   }
@@ -210,7 +213,7 @@ export function calculateProps(
       currentBreakpoint
     );
     // Extracting props from base style
-    let componentBaseStyle =
+    const componentBaseStyle =
       typeof componentTheme.baseStyle !== 'function'
         ? componentTheme.baseStyle
         : componentTheme.baseStyle({
@@ -270,7 +273,7 @@ export function calculateProps(
     }
   }
   // Extracting props from normal props
-  let extractedProps = extractProps(
+  const extractedProps = extractProps(
     props,
     theme,
     colorModeProps,

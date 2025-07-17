@@ -12,7 +12,7 @@ function isControlledProp(props: any, key: string) {
 import type { IUseTypeaheadProps } from './types';
 
 export function useTypeahead(props: IUseTypeaheadProps) {
-  let defaultValues = { ...dropdownDefaultStateValues };
+  const defaultValues = { ...dropdownDefaultStateValues };
   defaultValues.isOpen = getDefaultValue(props, 'isOpen');
 
   const [state, dispatch] = React.useReducer(

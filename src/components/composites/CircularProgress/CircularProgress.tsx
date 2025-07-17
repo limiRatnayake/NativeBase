@@ -23,8 +23,8 @@ const CircularProgress = (
   }
 
   let sizeProps;
-  let newProps = useThemeProps('CircularProgress', props);
-  let [, remainingProps] = themeTools.extractInObject(props, ['size']); // removing size from props so that Box don't accept size passed for CircularProgress
+  const newProps = useThemeProps('CircularProgress', props);
+  const [, remainingProps] = themeTools.extractInObject(props, ['size']); // removing size from props so that Box don't accept size passed for CircularProgress
 
   if (!newProps.size) {
     sizeProps = {
@@ -63,7 +63,7 @@ const CircularProgress = (
   }
   const [viewHeight, setViewHeight] = React.useState(0);
   const layout = (e: any) => {
-    let height = e.nativeEvent.layout.height;
+    const height = e.nativeEvent.layout.height;
     setViewHeight(height);
   };
 
@@ -113,7 +113,7 @@ const CircularProgress = (
       ],
     },
   });
-  let halfSide = (max ? (min ? max - min : max) : 100) / 2; // calculating the halfvalue of the progress according to min and max
+  const halfSide = (max ? (min ? max - min : max) : 100) / 2; // calculating the halfvalue of the progress according to min and max
 
   const propStyle = (percent: number, base_degrees: number) => {
     const rotateBy = base_degrees + (percent * 180) / halfSide;

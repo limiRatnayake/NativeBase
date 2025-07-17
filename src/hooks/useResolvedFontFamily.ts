@@ -32,9 +32,9 @@ export function useResolvedFontFamily(props: {
       //@ts-ignore
       newFontStyle = undefined;
 
-      let fontWeightNumber =
+      const fontWeightNumber =
         fontWeight in fontWeights ? fontWeights[fontWeight] : fontWeight;
-      let fontVariant = fontConfig[fontToken][fontWeightNumber];
+      const fontVariant = fontConfig[fontToken][fontWeightNumber];
 
       if (typeof fontVariant === 'object') {
         if (fontVariant[fontStyle]) newFontFamily = fontVariant[fontStyle];

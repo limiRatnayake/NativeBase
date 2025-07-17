@@ -33,7 +33,7 @@ const getAnimatedStyles = (animateValue: any) => (
   const styles: any = {
     transform: [],
   };
-  for (let key in initial) {
+  for (const key in initial) {
     if (key === 'transition') {
       continue;
     }

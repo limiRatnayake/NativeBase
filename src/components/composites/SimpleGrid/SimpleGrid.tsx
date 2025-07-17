@@ -33,14 +33,14 @@ const SimpleGrid = (props: ISimpleGridProps, ref?: any): JSX.Element => {
   if (useHasResponsiveProps(props)) {
     return <></>;
   }
-  let cellSpacing = space ?? 0;
-  let cellSpacingX = spacingX ?? cellSpacing;
-  let cellSpacingY = spacingY ?? cellSpacing;
+  const cellSpacing = space ?? 0;
+  const cellSpacingX = spacingX ?? cellSpacing;
+  const cellSpacingY = spacingY ?? cellSpacing;
 
   const childrenArray = React.Children.toArray(children);
 
   if (columns) {
-    let rowSlices = [];
+    const rowSlices = [];
     for (let i = 0; i < childrenArray.length; i = i + columns) {
       rowSlices.push(childrenArray.slice(i, i + columns));
     }

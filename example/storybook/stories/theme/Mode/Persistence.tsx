@@ -6,7 +6,7 @@ import { Content } from './Content';
 const colorModeManager: StorageManager = {
   get: async () => {
     try {
-      let val = await AsyncStorage.getItem('@color-mode');
+      const val = await AsyncStorage.getItem('@color-mode');
       return val === 'dark' ? 'dark' : 'light';
     } catch (e) {
       return 'light';

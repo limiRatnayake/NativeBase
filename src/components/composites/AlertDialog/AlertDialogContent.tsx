@@ -13,7 +13,7 @@ const AlertDialogContent = (props: IBoxProps, ref?: any) => {
     handleClose,
   } = React.useContext(AlertDialogContext);
   React.useEffect(() => {
-    let finalRefVal = finalFocusRef ? finalFocusRef.current : null;
+    const finalRefVal = finalFocusRef ? finalFocusRef.current : null;
     if (initialFocusRef && initialFocusRef.current) {
       //@ts-ignore
       initialFocusRef.current.focus();

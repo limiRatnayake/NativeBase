@@ -44,16 +44,24 @@ export const useKeyboardDismissable = ({ enabled, callback }: IParams) => {
 
 export function useBackHandler({ enabled, callback }: IParams) {
   useEffect(() => {
-    let backHandler = () => {
+    let subscription: { remove: () => void } | null = null;
+
+    const backHandler = () => {
       callback();
       return true;
     };
+
     if (enabled) {
-      BackHandler.addEventListener('hardwareBackPress', backHandler);
-    } else {
-      BackHandler.removeEventListener('hardwareBackPress', backHandler);
+      subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backHandler
+      );
     }
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', backHandler);
+
+    return () => {
+      if (subscription) {
+        subscription.remove();
+      }
+    };
   }, [enabled, callback]);
 }

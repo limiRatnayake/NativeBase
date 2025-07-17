@@ -13,7 +13,7 @@ const Input = React.forwardRef((props: any, ref: any) => {
 });
 
 it('a11y test in when required', async () => {
-  let { getByPlaceholderText } = render(
+  const { getByPlaceholderText } = render(
     <Wrapper>
       <FormControl nativeID="name" isRequired>
         <FormControl.Label>Name</FormControl.Label>
@@ -31,7 +31,7 @@ it('a11y test in when required', async () => {
 });
 
 it('a11y test in when invalid', async () => {
-  let { getByPlaceholderText } = render(
+  const { getByPlaceholderText } = render(
     <Wrapper>
       <FormControl nativeID="name" isInvalid>
         <FormControl.Label>Name</FormControl.Label>
@@ -48,7 +48,7 @@ it('a11y test in when invalid', async () => {
 });
 
 it('a11y test in when readOnly', async () => {
-  let { getByPlaceholderText } = render(
+  const { getByPlaceholderText } = render(
     <Wrapper>
       <FormControl nativeID="name" isReadOnly>
         <FormControl.Label>Name</FormControl.Label>
@@ -66,7 +66,7 @@ it('a11y test in when readOnly', async () => {
 });
 
 it('a11y test in when disabled', async () => {
-  let { getByPlaceholderText } = render(
+  const { getByPlaceholderText } = render(
     <Wrapper>
       <FormControl nativeID="name" isDisabled>
         <FormControl.Label>Name</FormControl.Label>
@@ -83,7 +83,7 @@ it('a11y test in when disabled', async () => {
 });
 
 it('a11y test when helper text is present', async () => {
-  let { getByPlaceholderText } = render(
+  const { getByPlaceholderText } = render(
     <Wrapper>
       <FormControl nativeID="name" isDisabled>
         <FormControl.Label>Name</FormControl.Label>
@@ -102,7 +102,7 @@ it('a11y test when helper text is present', async () => {
 it('sets htmlFor of FormLabel ref to nativeID of Input', async () => {
   let ref: HTMLLabelElement;
   const inputID = 'name';
-  let { getByPlaceholderText } = render(
+  const { getByPlaceholderText } = render(
     <Wrapper>
       <FormControl nativeID={inputID} isInvalid>
         <FormControl.Label

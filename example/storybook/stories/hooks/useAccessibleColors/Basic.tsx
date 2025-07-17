@@ -22,7 +22,7 @@ const ButtonTemplate = ({ shade }: any) => {
 };
 
 export const Example = () => {
-  let [, , toggleAccessibleColors] = useAccessibleColors();
+  const [, , toggleAccessibleColors] = useAccessibleColors();
   const { colors } = useTheme();
 
   return (

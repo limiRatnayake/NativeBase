@@ -10,7 +10,7 @@ const BreadcrumbIcon = (props: IBreadcrumbIconProps, ref?: any) => {
     BreadcrumbItemContext
   );
 
-  let { children, _current, ...resolvedProps } = usePropsResolution(
+  const { children, _current, ...resolvedProps } = usePropsResolution(
     'BreadcrumbIcon',
     props
   );

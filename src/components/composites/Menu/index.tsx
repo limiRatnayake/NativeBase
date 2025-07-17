@@ -5,7 +5,7 @@ import MenuItemOption from './MenuItemOption';
 import MenuOptionGroup from './MenuOptionGroup';
 import type { IMenuComponent } from './types';
 
-let MenuTemp: any = MenuMain;
+const MenuTemp: any = MenuMain;
 MenuTemp.Item = MenuItem;
 MenuTemp.Group = MenuGroup;
 MenuTemp.ItemOption = MenuItemOption;

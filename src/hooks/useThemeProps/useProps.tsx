@@ -16,7 +16,7 @@ const filterAndCalculateProps = (
   // Extracting out children and style, as they do not contribute in props calculation
   // This is done as these props are passed as it is later in the development
   // Required as some of these will trigger cyclic computation which may lead to error
-  let [ignoredProps, props] = extractInObject(propsReceived, [
+  const [ignoredProps, props] = extractInObject(propsReceived, [
     'children',
     'style',
     'onPress',
@@ -24,14 +24,14 @@ const filterAndCalculateProps = (
     'onOpen',
     'onClose',
   ]);
-  let newProps = calculateProps(
+  const newProps = calculateProps(
     theme,
     colorModeProps,
     componentTheme,
     props,
     windowWidth
   );
-  let mergedProps = filterShadowProps(newProps, ignoredProps, Platform.OS);
+  const mergedProps = filterShadowProps(newProps, ignoredProps, Platform.OS);
   return omitUndefined(mergedProps);
 };
 

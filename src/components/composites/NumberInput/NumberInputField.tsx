@@ -20,7 +20,7 @@ const NumberInputFiled = (
     numberInputStepper?: any;
   } = React.useContext(NumberInputContext);
   const changeHandler = (inputValue: any) => {
-    let minusIndex = inputValue.indexOf('-');
+    const minusIndex = inputValue.indexOf('-');
     if (minusIndex !== -1 && minusIndex !== 0) {
       inputValue = inputValue.replace('-', '');
       inputValue = '-' + inputValue;

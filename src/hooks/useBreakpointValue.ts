@@ -12,11 +12,11 @@ type UseBreakpointValueParam =
   | Array<any>;
 
 export function useBreakpointValue(values: UseBreakpointValueParam) {
-  let windowWidth = useWindowDimensions()?.width;
+  const windowWidth = useWindowDimensions()?.width;
   const theme = useTheme();
 
   if (hasValidBreakpointFormat(values, theme.breakpoints)) {
-    let currentBreakpoint = getClosestBreakpoint(
+    const currentBreakpoint = getClosestBreakpoint(
       theme.breakpoints,
       windowWidth
     );

@@ -47,7 +47,7 @@ export function useModeManager(
   useEffect(() => {
     if (colorModeManager) {
       (async function getMode() {
-        let value = await colorModeManager.get(initialColorMode);
+        const value = await colorModeManager.get(initialColorMode);
         if (value && value !== colorMode) {
           setRawMode(value);
         }

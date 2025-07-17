@@ -37,7 +37,6 @@
   },
   "version": "3.2.2",
   "license": "MIT",
-  "private": false,
   "main": "lib/commonjs/index",
   "module": "dist/bundle.web.js",
   "types": "lib/typescript/src/index.d.ts",

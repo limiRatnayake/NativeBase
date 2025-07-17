@@ -27,7 +27,7 @@ function RadiosGroup() {
 }
 describe('RadioGroup', () => {
   it('onChange and default on RadioGroup', () => {
-    let { getAllByRole, getByText } = render(
+    const { getAllByRole, getByText } = render(
       <NativeBaseProvider
         initialWindowMetrics={{
           frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -37,18 +37,18 @@ describe('RadioGroup', () => {
         <RadiosGroup />
       </NativeBaseProvider>
     );
-    let radios = getAllByRole('radio');
+    const radios = getAllByRole('radio');
     expect(radios.length).toBe(3);
     expect(radios[0].props.accessibilityState.checked).toBe(true);
     expect(radios[1].props.accessibilityState.checked).toBe(false);
     expect(radios[2].props.accessibilityState.checked).toBe(false);
-    let second = getByText('Second');
+    const second = getByText('Second');
     fireEvent.press(second);
     expect(radios[0].props.accessibilityState.checked).toBe(false);
   });
 
   it('can be disabled', () => {
-    let { getAllByRole } = render(
+    const { getAllByRole } = render(
       <NativeBaseProvider
         initialWindowMetrics={{
           frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -68,7 +68,7 @@ describe('RadioGroup', () => {
         </Radio.Group>
       </NativeBaseProvider>
     );
-    let second = getAllByRole('radio');
+    const second = getAllByRole('radio');
     expect(second[1].props.accessibilityState.disabled).toBe(true);
   });
 });

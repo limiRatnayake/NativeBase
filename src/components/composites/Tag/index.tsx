@@ -5,7 +5,7 @@ import type { ITagProps } from './types';
 import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
 
 const Tag = ({ style, ...props }: ITagProps, ref: any) => {
-  let resolvedProps = useThemeProps('Tag', props);
+  const resolvedProps = useThemeProps('Tag', props);
   //TODO: refactor for responsive prop
   if (useHasResponsiveProps(props)) {
     return null;

@@ -106,7 +106,7 @@ const getBreadcrumbSeparator = (
     let result: any = [];
     if (maxItems) {
       let buttonAdded = false;
-      if (typeof maxItems == 'number') {
+      if (typeof maxItems === 'number') {
         // When MaxItems is a number
         if (children.length > 2 * maxItems) {
           for (let i = 0; i < children.length; i++) {
@@ -125,7 +125,7 @@ const getBreadcrumbSeparator = (
         }
       }
       // Whem maxItems is an array
-      else if (typeof maxItems == 'object') {
+      else if (typeof maxItems === 'object') {
         if (children.length > maxItems[0] + maxItems[1])
           for (let i = 0; i < children.length; i++) {
             if (i < maxItems[0] || i >= children.length - maxItems[1]) {

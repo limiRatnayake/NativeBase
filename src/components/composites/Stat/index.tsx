@@ -14,7 +14,7 @@ import { useHasResponsiveProps } from '../../../hooks/useHasResponsiveProps';
 
 export const StatLabel = React.memo(
   React.forwardRef(({ style, ...props }: ITextProps, ref?: any) => {
-    let newProps = useThemeProps('Stat', props);
+    const newProps = useThemeProps('Stat', props);
     //TODO: refactor for responsive prop
     if (useHasResponsiveProps(props)) {
       return null;
@@ -35,7 +35,7 @@ export const StatLabel = React.memo(
 
 export const StatNumber = React.memo(
   React.forwardRef(({ style, ...props }: ITextProps, ref?: any) => {
-    let newProps = useThemeProps('Stat', props);
+    const newProps = useThemeProps('Stat', props);
     return (
       <Text {...newProps._statNumber} {...newProps} style={style} ref={ref}>
         {props.children}
@@ -46,7 +46,7 @@ export const StatNumber = React.memo(
 
 export const StatHelpText = React.memo(
   React.forwardRef(({ style, ...props }: IBoxProps, ref?: any) => {
-    let newProps = useThemeProps('Stat', props);
+    const newProps = useThemeProps('Stat', props);
     return (
       <Box {...newProps._statHelpText} {...newProps} style={style} ref={ref}>
         {props.children}
@@ -68,7 +68,7 @@ export const StatArrow = React.memo(
 
 export const StatGroup = React.memo(
   React.forwardRef(({ style, ...props }: IBoxProps, ref: any) => {
-    let newProps = useThemeProps('Stat', props);
+    const newProps = useThemeProps('Stat', props);
     return (
       <HStack {...newProps._statGroup} {...newProps} ref={ref} style={style} />
     );

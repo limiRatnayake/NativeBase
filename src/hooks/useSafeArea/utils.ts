@@ -24,7 +24,7 @@ function getValueInPixels(
   manualInset: number | string
 ) {
   let appliedInset: any = 0;
-  let originalValue = paddingKeys.length
+  const originalValue = paddingKeys.length
     ? sizes[paddingProps[paddingKeys[paddingKeys.length - 1]]]
     : 0;
 
@@ -71,12 +71,12 @@ export function calculatePaddingTop(
   }
 
   // DOC: Adding it for manual inset passed by the user
-  let [topSafeAreaProps] = themeTools.orderedExtractInObject(safeAreaProps, [
+  const [topSafeAreaProps] = themeTools.orderedExtractInObject(safeAreaProps, [
     'safeArea',
     'safeAreaY',
     'safeAreaTop',
   ]);
-  let topSafeAreaArray = Object.keys(topSafeAreaProps);
+  const topSafeAreaArray = Object.keys(topSafeAreaProps);
   const manualInset = topSafeAreaArray.length
     ? topSafeAreaProps[topSafeAreaArray[topSafeAreaArray.length - 1]]
     : undefined;
@@ -112,12 +112,11 @@ export function calculatePaddingBottom(
   ) {
     return;
   }
-  let [bottomSafeAreaProps] = themeTools.orderedExtractInObject(safeAreaProps, [
-    'safeArea',
-    'safeAreaY',
-    'safeAreaBottom',
-  ]);
-  let bottomSafeAreaArray = Object.keys(bottomSafeAreaProps);
+  const [bottomSafeAreaProps] = themeTools.orderedExtractInObject(
+    safeAreaProps,
+    ['safeArea', 'safeAreaY', 'safeAreaBottom']
+  );
+  const bottomSafeAreaArray = Object.keys(bottomSafeAreaProps);
   const manualInset = bottomSafeAreaArray.length
     ? bottomSafeAreaProps[bottomSafeAreaArray[bottomSafeAreaArray.length - 1]]
     : undefined;
@@ -155,12 +154,12 @@ export function calculatePaddingLeft(
   ) {
     return;
   }
-  let [leftSafeAreaProps] = themeTools.orderedExtractInObject(safeAreaProps, [
+  const [leftSafeAreaProps] = themeTools.orderedExtractInObject(safeAreaProps, [
     'safeArea',
     'safeAreaLeft',
     'safeAreaX',
   ]);
-  let leftSafeAreaArray = Object.keys(leftSafeAreaProps);
+  const leftSafeAreaArray = Object.keys(leftSafeAreaProps);
   // DOC: Since last value takes precedence so, directly takes last value
   const manualInset = leftSafeAreaArray.length
     ? leftSafeAreaProps[leftSafeAreaArray[leftSafeAreaArray.length - 1]]
@@ -199,12 +198,11 @@ export function calculatePaddingRight(
     return;
   }
   // DOC: Adding it for manual inset passed by the user
-  let [rightSafeAreaProps] = themeTools.orderedExtractInObject(safeAreaProps, [
-    'safeArea',
-    'safeAreaX',
-    'safeAreaRight',
-  ]);
-  let rightSafeAreaArray = Object.keys(rightSafeAreaProps);
+  const [rightSafeAreaProps] = themeTools.orderedExtractInObject(
+    safeAreaProps,
+    ['safeArea', 'safeAreaX', 'safeAreaRight']
+  );
+  const rightSafeAreaArray = Object.keys(rightSafeAreaProps);
   const manualInset = rightSafeAreaArray.length
     ? rightSafeAreaProps[rightSafeAreaArray[rightSafeAreaArray.length - 1]]
     : undefined;
@@ -234,7 +232,7 @@ function getRelatedPaddingProps(props: any, relatedKeys: Array<any>) {
   return Object.keys(props).filter((key) => relatedKeys.includes(key));
 }
 export function getSortedProps(props: any) {
-  let [
+  const [
     safeAreaProps,
     sansSafeAreaProps,
   ] = themeTools.orderedExtractInObject(props, [
@@ -246,7 +244,7 @@ export function getSortedProps(props: any) {
     'safeAreaLeft',
     'safeAreaRight',
   ]);
-  let [
+  const [
     paddingProps,
     sansPaddingProps,
   ] = themeTools.orderedExtractInObject(sansSafeAreaProps, [

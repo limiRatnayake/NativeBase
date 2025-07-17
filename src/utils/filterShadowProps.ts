@@ -10,7 +10,7 @@ export const filterShadowProps = (
     return { ...ignoredProps, ...props };
   }
   let style = ignoredProps.style ?? {};
-  let [shadowProps, remainingProps] = extractInObject(props, [
+  const [shadowProps, remainingProps] = extractInObject(props, [
     'shadowColor',
     'shadowOffset',
     'shadowOpacity',

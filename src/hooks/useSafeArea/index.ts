@@ -11,7 +11,7 @@ export function useSafeArea(props: any) {
   if (!Object.keys(safeAreaProps).length) {
     return props;
   }
-  let calcualtedPaddingProps = calculatePaddingProps(
+  const calcualtedPaddingProps = calculatePaddingProps(
     safeAreaProps,
     paddingProps,
     insets,

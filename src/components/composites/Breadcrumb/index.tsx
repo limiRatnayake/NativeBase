@@ -6,7 +6,7 @@ import BreadcrumbIcon from './BreadcrumbIcon';
 export type { IBreadcrumbProps, IBreadcrumbItemProps } from './types';
 import type { IBreadcrumbComponentType } from './types';
 
-let BreadcrumbTemp: any = BreadcrumbMain;
+const BreadcrumbTemp: any = BreadcrumbMain;
 BreadcrumbTemp.Item = BreadcrumbItem;
 BreadcrumbTemp.Link = BreadcrumbLink;
 BreadcrumbTemp.Text = BreadcrumbText;

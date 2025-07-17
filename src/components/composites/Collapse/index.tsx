@@ -66,11 +66,11 @@ const Collapse = (
     animatedStyle = {
       height: isOpen ? endingHeight : defaultStartHeight,
     };
-    let callback = onAnimationEnd ? onAnimationEnd : () => {};
+    const callback = onAnimationEnd ? onAnimationEnd : () => {};
     LayoutAnimation.configureNext(CustomLayoutLinear, callback());
   };
 
-  let wasOpen = usePrevious(isOpen);
+  const wasOpen = usePrevious(isOpen);
   if (!isNil(wasOpen.value) && wasOpen.value !== isOpen) {
     animateView();
     wasOpen.updatePrevious(isOpen);

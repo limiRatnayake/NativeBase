@@ -7,7 +7,7 @@ import Switch from '../index';
 jest.useFakeTimers();
 describe('Switch', () => {
   it('can be default checked', () => {
-    let { getAllByRole } = render(
+    const { getAllByRole } = render(
       <NativeBaseProvider
         initialWindowMetrics={{
           frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -17,12 +17,12 @@ describe('Switch', () => {
         <Switch defaultIsChecked />
       </NativeBaseProvider>
     );
-    let switches = getAllByRole('switch');
+    const switches = getAllByRole('switch');
     expect(switches[0].props.value).toBe(true);
   });
 
   it('can be disabled', () => {
-    let { getAllByRole } = render(
+    const { getAllByRole } = render(
       <NativeBaseProvider
         initialWindowMetrics={{
           frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -32,7 +32,7 @@ describe('Switch', () => {
         <Switch isDisabled />
       </NativeBaseProvider>
     );
-    let switches = getAllByRole('switch');
+    const switches = getAllByRole('switch');
     expect(switches[0].props.disabled).toBe(true);
   });
 });

@@ -23,8 +23,8 @@ const PinInputFiled = (
     ...context
   }: IPinInputContext = React.useContext(PinInputContext);
   cDefaultValue = cDefaultValue && cDefaultValue[fieldIndex];
-  let defaultValue = pDefaultValue || cDefaultValue;
-  let value = cValue && cValue[fieldIndex];
+  const defaultValue = pDefaultValue || cDefaultValue;
+  const value = cValue && cValue[fieldIndex];
 
   const keyPressHandler = (event: any) => {
     if (Platform.OS !== 'web') {

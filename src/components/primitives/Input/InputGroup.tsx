@@ -13,7 +13,7 @@ const supplyPropsToChildren = (children: any, props: any) => {
 
 export const InputGroup = memo(
   forwardRef(({ children, ...props }: IInputGroupProps, ref: any) => {
-    let [layoutProps, remProps] = themeTools.extractInObject(props, [
+    const [layoutProps, remProps] = themeTools.extractInObject(props, [
       'w',
       'width',
       'm',

@@ -5,7 +5,7 @@ import ListOrdered from './Ordered';
 import ListUnordered from './Unordered';
 import type { IListComponentType } from './types';
 
-let ListTemp: any = ListDefault;
+const ListTemp: any = ListDefault;
 ListTemp.Item = ListItem;
 ListTemp.Icon = ListIcon;
 ListTemp.Ordered = ListOrdered;

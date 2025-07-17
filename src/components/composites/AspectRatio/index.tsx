@@ -10,7 +10,7 @@ const AspectView = React.forwardRef((props: any, ref?: any) => {
   const inputStyle = [StyleSheet.flatten(props.style) || {}];
   if (layout) {
     // @ts-ignore
-    let { width = 0, height = 0 } = layout;
+    const { width = 0, height = 0 } = layout;
     if (width === 0) {
       inputStyle.push({ width: height * props.aspectRatio, height });
     } else {
@@ -38,7 +38,7 @@ const AspectRatio = (props: IAspectRatioProps, ref?: any) => {
     { resolveResponsively: ['ratio'] }
   );
   let computedStyle: ViewStyle | undefined = style;
-  let newChildWithProps = React.cloneElement(
+  const newChildWithProps = React.cloneElement(
     children,
     {
       ...children.props,

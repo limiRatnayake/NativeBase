@@ -24,7 +24,7 @@ export const Example = () => {
       console.log('Handle submit', values);
     },
     validate: (values) => {
-      let errors: FormikErrors<IFormFields> = {};
+      const errors: FormikErrors<IFormFields> = {};
       if (!values.firstName) {
         errors.firstName = 'Required';
       } else if (values.firstName.length > 15) {

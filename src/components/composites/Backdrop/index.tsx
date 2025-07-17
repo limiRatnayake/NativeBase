@@ -22,7 +22,7 @@ const Backdrop = (props: IPressableProps) => {
       bg={props.bg || 'rgb(0, 0, 0)'}
       opacity={0.3}
       {...props}
-    ></Pressable>
+    />
   );
 };
 

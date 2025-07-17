@@ -17,8 +17,8 @@ export const useBreakpointResolvedProps = (props: IProps) => {
     .currentBreakpoint;
   const theme = useTheme();
   const newProps: INewProps = React.useMemo(() => {
-    let newProps: INewProps = {};
-    for (let key in props) {
+    const newProps: INewProps = {};
+    for (const key in props) {
       const rawValue = props[key];
       const value = resolveValueWithBreakpoint(
         rawValue,

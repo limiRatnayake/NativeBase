@@ -16,8 +16,8 @@ const Drawer = ({
   onClose,
   placement = 'right',
 }: DrawerProps) => {
-  let placementStyles = React.useMemo(() => {
-    let styles: any = {
+  const placementStyles = React.useMemo(() => {
+    const styles: any = {
       position: 'absolute',
     };
 
